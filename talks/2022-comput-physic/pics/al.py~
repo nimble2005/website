@@ -1,0 +1,349 @@
+from matplotlib import pyplot as plt
+import numpy as np
+import sys
+sys.path.append("/home/nby/study/NBY-Lib/")
+sys.path.append("/home/nby/study/aluminum")
+from nbyplot import myplot, myscatter, myfig_setup_notitle, nbymarker, nbycolor
+import units
+from scipy.interpolate import splrep, splev  # spline algorithm
+from scipy.interpolate import CubicSpline
+from math import ceil
+plt.rcParams["figure.autolayout"] = True
+
+
+def epspl(dist, ep, phi, plo):
+    step = np.float64(1e-3)
+    intep = splrep(dist, ep)
+    distleft = plo
+    distright = phi
+    num = np.int64(np.ceil((distright-distleft)/step))+1
+    xdis = np.linspace(distleft, distright, num, endpoint=True)
+    intvp = splev(xdis, intep, der=0)
+    return xdis, intvp, step, num
+
+
+def main():
+    fcc = np.loadtxt("/home/nby/study/aluminum/Gibbs/FCC-300K.dat")
+    hcp2 = np.loadtxt("/home/nby/study/aluminum/Gibbs/HCP2-300K.dat")  # c/a=1.62
+    bcc = np.loadtxt("/home/nby/study/aluminum/Gibbs/BCC-300K.dat")
+    fcc0k = np.loadtxt("/home/nby/study/aluminum/Gibbs/FCC-0K.dat")
+    hcp20k = np.loadtxt("/home/nby/study/aluminum/Gibbs/HCP2-0K.dat")
+    bcc0k = np.loadtxt("/home/nby/study/aluminum/Gibbs/BCC-0K.dat")
+    # ---------- relative Gibbs FE relative FCC for HCP --------------
+    plo1 = np.float64(150.)
+    phi1 = np.float64(630.)
+    fitfccx1, fitfccy1, stepfcc1, nfcc1 = \
+        epspl(fcc[-1::-1, 0], fcc[-1::-1, 1], phi1, plo1)
+    fitbccx1, fitbccy1, stepbcc1, nbcc1 = \
+        epspl(bcc[-1::-1, 0], bcc[-1::-1, 1], phi1, plo1)
+    # fithcpx1, fithcpy1, stephcp1, nhcp1 = \
+    #     epspl(hcp1[-1::-1, 0], hcp1[-1::-1, 1], phi1, plo1)
+    fithcpx2, fithcpy2, stephcp2, nhcp2 = \
+        epspl(hcp2[-1::-1, 0], hcp2[-1::-1, 1], phi1, plo1)
+    # fithcpx3, fithcpy3, stephcp3, nhcp3 = \
+    #     epspl(hcp3[-1::-1, 0], hcp3[-1::-1, 1], phi1, plo1)
+    # fithcpx4, fithcpy4, stephcp4, nhcp4 = \
+    #     epspl(hcp4[-1::-1, 0], hcp4[-1::-1, 1], phi1, plo1)
+    fithcp2 = (fithcpy2 - fitfccy1) * 1000
+    fitbcc1 = (fitbccy1 - fitfccy1) * 1000
+    # 1st transition point for FCC-HCP
+    point1 = (fitfccx1[fithcp2 < 0][0])
+    # 2nd transition point for HCP-BCC
+    delta2 = fitbcc1 - fithcp2
+    point2 = (fitfccx1[delta2 < 0][0])
+    # ---------------- relative Enthalpy relative FCC -----------------
+    plo3 = np.float64(150)        # pressure lower limit
+    phi3 = np.float64(600)        # pressure upper limit
+    fitfccx0k_2, fitfccy0k_2, stepfcc0k_2, nfcc0k_2 = \
+        epspl(fcc0k[-1::-1, 0], fcc0k[-1::-1, 1], phi3, plo3)
+    fitbccx0k_2, fitbccy0k_2, stepbcc0k_2, nbcc0k_2 = \
+        epspl(bcc0k[-1::-1, 0], bcc0k[-1::-1, 1], phi3, plo3)
+    fithcpx20k, fithcpy20k, stephcp20k, nhcp20k = \
+        epspl(hcp20k[-1::-1, 0], hcp20k[-1::-1, 1], phi3, plo3)
+    fithcp0k_2 = (fithcpy20k - fitfccy0k_2) * 1000
+    fitbcc0k_2 = (fitbccy0k_2 - fitfccy0k_2) * 1000
+    point1_0k_2 = (fitfccx0k_2[fithcp0k_2 < 0][0])  # 171 GPa
+    delta2_0k_2 = fitbcc0k_2 - fithcp0k_2
+    point2_0k_2 = (fitfccx0k_2[delta2_0k_2 < 0][0])  # 378 GPa
+    # ---------------- plot the relative G difference -----------------
+    # --------------------- PV EOS -------------------------
+    from experiment import exp1, exp1_v0
+    from experiment import exp2_fcc, exp2_hcp, exp2_bcc
+    from experiment import exp2_v0, exp2_v01, exp2_v02
+    from experiment import exp3_fcc, exp3_hcp, exp3_v0
+    from experiment import exp4_fcc, exp4_hcp, exp4_bcc
+    pvfcc = np.loadtxt("/home/nby/study/aluminum/pveos/FCC-300K.dat")
+    pvhcp2 = np.loadtxt("/home/nby/study/aluminum/pveos/HCP2-300K.dat")
+    pvbcc = np.loadtxt("/home/nby/study/aluminum/pveos/BCC-300K.dat")
+    pvfcc0k = np.loadtxt("/home/nby/study/aluminum/pveos/FCC-0K.dat")
+    pvhcp20k = np.loadtxt("/home/nby/study/aluminum/pveos/HCP2-0K.dat")
+    pvbcc0k = np.loadtxt("/home/nby/study/aluminum/pveos/BCC-0K.dat")
+    vol0 = np.float64(16.84465753333616)
+    fig, ax = plt.subplots(edgecolor="none", facecolor="none")
+    fccv = pvfcc[:, 0] # / vol0
+    fccp = pvfcc[:, 1]
+    fccv = fccv[fccp < point1]
+    fccp = fccp[fccp < point1]
+    # print("FCC end:", fccp[0], fccv[0])
+    hcpv = pvhcp2[:, 0] # / vol0
+    hcpp = pvhcp2[:, 1]
+    nself = np.array(np.where(hcpp >= point1))[0, -1]
+    nsels = np.array(np.where(hcpp < point2))[0, 0]
+    hcpv = hcpv[np.arange(nsels, nself+1)]
+    hcpp = hcpp[np.arange(nsels, nself+1)]
+    # print("HCP start:", hcpp[-1], hcpv[-1])
+    # print("HCP end:", hcpp[0], hcpv[0])
+    bccv = pvbcc[:, 0] # / vol0
+    bccp = pvbcc[:, 1]
+    bccv = bccv[bccp >= point2]
+    bccp = bccp[bccp >= point2]
+    # print("BCC start:", bccp[-1], bccv[-1])
+    volume = np.concatenate((fccv[-1::-1], hcpv[-1::-1], bccv[-1::-1]))
+    press = np.concatenate((fccp[-1::-1], hcpp[-1::-1], bccp[-1::-1]))
+    # ------------- 0K ----------------------------#
+    vol0_0k = pvfcc0k[pvfcc0k[:, 1] > 0][-1, 0]  # 16.5
+    fccv0k = pvfcc0k[:, 0] # / vol0
+    fccp0k = pvfcc0k[:, 1]
+    fccv0k = fccv0k[fccp0k < point1_0k_2]
+    fccp0k = fccp0k[fccp0k < point1_0k_2]
+    hcpv0k = pvhcp20k[:, 0] # / vol0
+    hcpp0k = pvhcp20k[:, 1]
+    nself0k = np.array(np.where(hcpp0k >= point1_0k_2))[0, -1]
+    nsels0k = np.array(np.where(hcpp0k < point2_0k_2))[0, 0]
+    hcpv0k = hcpv0k[np.arange(nsels0k, nself0k+1)]
+    hcpp0k = hcpp0k[np.arange(nsels0k, nself0k+1)]
+    bccv0k = pvbcc0k[:, 0] # / vol0
+    bccp0k = pvbcc0k[:, 1]
+    bccv0k = bccv0k[bccp0k >= point2_0k_2]
+    bccp0k = bccp0k[bccp0k >= point2_0k_2]
+    volume0k = np.concatenate((fccv0k[-1::-1], hcpv0k[-1::-1], bccv0k[-1::-1]))
+    press0k = np.concatenate((fccp0k[-1::-1], hcpp0k[-1::-1], bccp0k[-1::-1]))
+    # ---------------------------------------------
+    myplot(ax, volume, press,
+           {"color": "black",
+            "linestyle": "-",
+            "linewidth": 1.0,
+            "label": r"DIA"})
+    myplot(ax, volume0k, press0k,  # 0k PV
+           {"color": "black",
+            "linestyle": ":",
+            "label": r"0K-enthalpy"})
+    # -------- fake plot for legend ---------------
+    myscatter(ax, -100, -100,
+              {"color": "black",
+               "marker": "+", "s": 50,
+               "label": r"Dewaele et al. (2004)"})
+    myscatter(ax, -100, -100,
+              {"color": "none",
+               "edgecolors": "black",
+               "marker": "o", "s": 50,
+               "label": r"Akahama et al. (2006)"})
+    myscatter(ax, -100, -100,
+              {"color": "none",
+               "edgecolors": "black",
+               "marker": "v", "s": 50,
+               "label": r"Plosin et al. (2017)"})
+    myscatter(ax, -100, -100,
+              {"color": "none",
+               "edgecolors": "black",
+               "marker": "s", "s": 50,
+               "label": r"Dewaele et al. (2018)"})
+    # ---------------------------------------------
+    myscatter(ax, exp1[0, :], exp1[1, :],
+              {"color": "red",
+               "marker": "+", "s": 50})
+    myscatter(ax, exp3_fcc[0, :], exp3_fcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "red",
+               "marker": "o", "s": 40})
+    myscatter(ax, exp3_fcc[0, :], exp3_fcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "red",
+               "marker": "o", "s": 40})
+    myscatter(ax, exp3_hcp[0, :], exp3_hcp[1, :],
+              {"facecolor": "white",
+               "edgecolors": "magenta",
+               "marker": "o", "s": 40})
+    myscatter(ax, exp4_fcc[0, :], exp4_fcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "red",
+               "marker": "v", "s": 40})
+    myscatter(ax, exp4_hcp[0, :], exp4_hcp[1, :],
+              {"facecolor": "white",
+               "edgecolors": "magenta",
+               "marker": "v", "s": 40})
+    myscatter(ax, exp4_bcc[0, :], exp4_bcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "green",
+               "marker": "v", "s": 40})
+    myscatter(ax, exp2_fcc[0, :], exp2_fcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "red",
+               "marker": "s", "s": 40})
+    myscatter(ax, exp2_hcp[0, :], exp2_hcp[1, :],
+              {"facecolor": "white",
+               "edgecolors": "magenta",
+               "marker": "s", "s": 40})
+    myscatter(ax, exp2_bcc[0, :], exp2_bcc[1, :],
+              {"facecolor": "white",
+               "edgecolors": "green",
+               "marker": "s", "s": 40})
+    lineylo = np.array([0., 0., 0., 0.])
+    yarea = 700
+    lineyhi = np.array([yarea, yarea, yarea, yarea])
+    linexfcc = np.linspace(fccv[0], fccv[-1], 4)
+    linexhcp = np.linspace(hcpv[0], fccv[0], 4)
+    linexbcc = np.linspace(bccv[0], hcpv[0], 4)
+    fade = 0.3
+    ax.fill_between(linexfcc, lineylo, lineyhi,
+                    color=nbycolor[0], facecolor=nbycolor[0], alpha=fade)
+    ax.fill_between(linexhcp, lineylo, lineyhi,
+                    color=nbycolor[4], facecolor=nbycolor[4], alpha=fade)
+    ax.fill_between(linexbcc, lineylo, lineyhi,
+                    color=nbycolor[2], facecolor=nbycolor[2], alpha=fade)
+    # ---------- 0k boundary -----------------------------
+    bd1x = [fccv0k[0] for i in range(4)]
+    bd2x = [hcpv0k[0] for i in range(4)]
+    liney = np.linspace(0, yarea, 4)
+    # ----------------------------------------------------
+    ax.set_xlim(5.9, 16.5)
+    ax.set_ylim(-1, 650)
+    ax.text((fccv[-1] - fccv[0]) / 2 + fccv[0] - 1, 150,
+            "FCC", color=nbycolor[0],
+            fontsize=17, fontname="Times New Roman")
+    ax.text((fccv[0] - hcpv[0]) / 2 + hcpv[0] - 0.5, 150,
+            "HCP", color=nbycolor[4],
+            fontsize=17, fontname="Times New Roman")
+    ax.text((hcpv[0] - bccv[0]) / 2 + bccv[0] - 0.5, 150,
+            "BCC", color=nbycolor[2],
+            fontsize=17, fontname="Times New Roman")
+    myfig_setup_notitle(ax,
+                        r"$V\ ({\AA}^3/atom)$",
+                        "Pressure (GPa)", 12)
+    ax.annotate(r"$\frac{V}{V_0}=$"+str("%.2f" % (fccv[0] / vol0)),
+                xy=(fccv[0], fccp[0]),
+                xytext=(9, 300),
+                arrowprops=dict(arrowstyle="<-",
+                                color=nbycolor[4],
+                                linestyle="-",
+                                linewidth=1.5), color=nbycolor[4], fontsize=15)
+    ax.annotate(r"$\frac{V}{V_0}=$"+str("%.2f" % (hcpv[0] / vol0)),
+                xy=(hcpv[0], hcpp[0] + 5),
+                xytext=(7.4, 450),
+                arrowprops=dict(arrowstyle="<-",
+                                color=nbycolor[2],
+                                linestyle="-",
+                                linewidth=1.5), color=nbycolor[2], fontsize=15)
+    ax.tick_params(labelsize=13)
+    # ax.get_legend().remove()
+    ax.legend(loc=(0.47, 0.5), fontsize=13,
+              facecolor="none",
+              edgecolor="none",
+              frameon="False",)
+    plt.savefig("./abstract-img-2.png", bbox_inches="tight",
+                format="png", dpi=300)
+    plt.close(fig)
+    # ---------------------------------------------------
+    phasecolor = {"fcc": "red", "hcp": "magenta", "bcc": "green"}
+    fcc = np.loadtxt("/home/nby/study/aluminum/Gibbs/FCC-300K.dat")
+    hcp = np.loadtxt("/home/nby/study/aluminum/Gibbs/HCP-300K.dat")  # c/a=sqrt(3/8)=1.638
+    hcp1 = np.loadtxt("/home/nby/study/aluminum/Gibbs/HCP1-300K.dat")  # c/a=1.61
+    hcp2 = np.loadtxt("/home/nby/study/aluminum/Gibbs/HCP2-300K.dat")  # c/a=1.62
+    bcc = np.loadtxt("/home/nby/study/aluminum/Gibbs/BCC-300K.dat")
+    # ---------------- relative Gibbs FE relative FCC -----------------
+    plo = np.float64(0.)        # pressure lower limit
+    phi = np.float64(600)       # pressure upper limit
+    fitfccx, fitfccy, stepfcc, nfcc = \
+        epspl(fcc[-1::-1, 0], fcc[-1::-1, 1], phi, plo)
+    fitbccx, fitbccy, stepbcc, nbcc = \
+        epspl(bcc[-1::-1, 0], bcc[-1::-1, 1], phi, plo)
+    fithcpx, fithcpy, stephcp, nhcp = \
+        epspl(hcp[-1::-1, 0], hcp[-1::-1, 1], phi, plo)
+    fithcp = (fithcpy - fitfccy) * 1000
+    fitbcc = (fitbccy - fitfccy) * 1000
+    # ---------- relative Gibbs FE relative FCC for HCP --------------
+    plo1 = np.float64(150.)
+    phi1 = np.float64(630.)
+    fitfccx1, fitfccy1, stepfcc1, nfcc1 = \
+        epspl(fcc[-1::-1, 0], fcc[-1::-1, 1], phi1, plo1)
+    fitbccx1, fitbccy1, stepbcc1, nbcc1 = \
+        epspl(bcc[-1::-1, 0], bcc[-1::-1, 1], phi1, plo1)
+    fithcpx1, fithcpy1, stephcp1, nhcp1 = \
+        epspl(hcp1[-1::-1, 0], hcp1[-1::-1, 1], phi1, plo1)
+    fithcpx2, fithcpy2, stephcp2, nhcp2 = \
+        epspl(hcp2[-1::-1, 0], hcp2[-1::-1, 1], phi1, plo1)
+    fithcp1 = (fithcpy1 - fitfccy1) * 1000
+    fithcp2 = (fithcpy2 - fitfccy1) * 1000
+    fitbcc1 = (fitbccy1 - fitfccy1) * 1000
+    # ---------- find the transition point by DIA --------------------
+    point1_dia = (fitfccx1[fithcp2 < 0][0])
+    delta2 = fitbcc1 - fithcp2
+    point2_dia = (fitfccx1[delta2 < 0][0])
+    # ---------- HCP phase curve concatenate --------------------------
+    hcp_c1 = np.array([fithcpx[fithcpx <= point1],
+                       fithcp[fithcpx <= point1]])
+    hcp2_c1 = np.array([fithcpx2[fithcpx2 > point1],
+                        fithcp2[fithcpx2 > point1]])
+    hcp2_c2 = hcp2_c1[:, hcp2_c1[0, :] <= point2]
+    hcp1_c1 = np.array([fithcpx1[fithcpx1 > point2],
+                        fithcp1[fithcpx1 > point2]])
+    HCP_dia = np.concatenate((hcp_c1, hcp2_c2, hcp1_c1), axis=1)
+    # ---------------- plot the relative G difference -----------------
+    fig, ax = plt.subplots(figsize=[11, 6.5])
+    line0x = np.array([plo, phi])
+    line0y = np.array([0.0 for i in range(len(line0x))])
+    ax.set_xlim(line0x[0], line0x[-1])
+    myplot(ax, line0x, line0y,
+           {"color": phasecolor["fcc"],
+            "linestyle": ":",
+            "label": "FCC"})
+    myplot(ax, HCP_dia[0, :], HCP_dia[1, :],
+           {"color": phasecolor["hcp"],
+            "linestyle": "--",
+            "label": r"HCP"})
+    myplot(ax, fitfccx, fitbcc,
+           {"color": phasecolor["bcc"],
+            "linestyle": "-.",
+            "label": "BCC"})
+    myscatter(ax, point1_dia, 0,
+              {"color": "white",
+               "edgecolors": nbycolor[4],
+               "marker": "o", "s": 50})
+    ax.annotate(str(round(point1_dia))+" GPa",
+                xy=(round(point1_dia), 1),
+                # xytext=(round(point1_dia)-50, -100),
+                xytext=(50, -40),
+                arrowprops=dict(arrowstyle="<-",
+                                color=nbycolor[4],
+                                linestyle="-",
+                                linewidth=2.5), color=nbycolor[4], fontsize=20)
+    # 2nd transition point for HCP-BCC
+    myscatter(ax, point2_dia, fithcp1[delta2 < 0][0],
+              {"color": "white",
+               "edgecolors": nbycolor[2],
+               "marker": "o", "s": 50})
+    ax.annotate(str(round(point2_dia))+" GPa",
+                xy=(round(point2_dia), fithcp1[delta2 < 0][0]),
+                # xytext=(round(point2_dia)-50, fithcp1[delta2 < 0][0] - 100),
+                xytext=(150, -80),
+                arrowprops=dict(arrowstyle="<-",
+                                color=nbycolor[2],
+                                linestyle="-",
+                                linewidth=2.5), color=nbycolor[2], fontsize=20)
+    myfig_setup_notitle(ax,
+                        "Pressure (GPa)",
+                        r"$\Delta\mathcal{G}=\mathcal{G}-\mathcal{G}_{FCC}$ (meV/atom)", 22)
+    ax.text(50, 150,
+            r"$\mathbf{T=300K}$", color="black",
+            fontsize=25,
+            fontname="Times New Roman")
+    ax.set_ylim(-100, 200)
+    ax.legend(loc=(0.01, 0.01), fontsize=15)
+    ax.tick_params(labelsize=18)
+    plt.savefig("./abstract-img-inset-2.png", bbox_inches="tight",
+                format="png", dpi=300)
+    plt.close(fig)
+
+
+if __name__ == '__main__':
+    main()

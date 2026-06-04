@@ -1,0 +1,465 @@
+#+reveal_properties:
+#+reveal_init_options: margin: 0.05, transition: "cube", slideNumber: "h.v", width: 1600
+#+options: toc:nil num:nil timestamp: nil
+#+REVEAL_MATHJAX_URL: ../../MathJax-master/es5/tex-chtml-full.js
+#+reveal_margin: 0.1
+#+reveal_theme: league
+#+reveal_hlevel: 1
+#+reveal_extra_css: ./nby-reveal.css
+# available theme: black|white|league|beige|sky|night|serif|simple|solarized|blood|moon
+# available transition style: default|cube|page|concave|zoom|linear|fade|none.
+# --------------------title slide---------------------------------------------
+#+reveal_title_slide: <img class="logo" src="../pics/FDU-log.png"/>
+#+reveal_title_slide: <img class="logo-imp" src="../pics/imp-logo.png"/>
+#+reveal_title_slide: <h1, class="title">预测固体相变条件及状态方程的新方法 --- DIA</h1><br>
+# #+reveal_title_slide: <h2, class="t2">--- Direct Integral Approach</h2>
+#+reveal_title_slide: <br>
+#+reveal_title_slide: <h2, class="t3">宁博元<sup>&#8224</sup>, 宁西京<sup>&#8225</sup></h2><br>
+#+reveal_title_slide: <h4, class="t4">复旦大学现代物理研究所</h4><br>
+#+reveal_title_slide: <h4, class="t4">复旦大学核科学与技术系</h4><br>
+# #+reveal_title_slide: <br>
+#+reveal_title_slide: <h5, class="t5"><sup>&#8224</sup>byning@fudan.edu.cn,  <sup>&#8225</sup>xjning@fudan.edu.cn</h5><br>
+#+reveal_title_slide: <br>
+#+reveal_title_slide: <h6, class="t5">CPS2022 &#8729 深圳</h5><br>
+# setup title background
+# #+reveal_title_slide_background: ./img/BCC-potential.gif
+#+reveal_title_slide_background_opacity: 0.03
+#+reveal_title_slide_background_size: 1600px 900px
+#+startup: showall
+# ----------------------------------------------------------------------------
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font", style="color: cyan">问题的提出: 普适方法预测固体的相变和状态方程?</div>
+<div class="r-stack">
+    <div class="page1img fragment current-visible">
+	<div class="page1_1" style="font-size: 35px">
+	    <ul>
+		<li>高温高压条件下固体的相变和状态方程</li>
+		<ul>
+		    <li>航空发动机、燃气轮机叶片</li>
+		    <li>核反应堆壁材料, 核燃料包覆材料</li>
+		    <li>武器结构材料</li>
+		    <li>地球物理, 星体内部结构</li>
+		</ul>
+		<li>理论方法</li>
+		<ul>
+		    <li>经验状态方程(BM, Vinet, AP2 EOS...)</li>
+		    <li>声子模型(准谐振近似)</li>
+		</ul>
+	    </u>
+	</div>
+	<div class="page1_2">
+	<img src="../pics/airblade.jpg" height="300" width="320"/>
+	<img src="../pics/icf.png" height="300" width="320"/>
+	<img src="../pics/earthcore.jpg" height="300" width="370"/>
+	</div>
+    </div>
+    
+    <div class="fragment current-visible">
+        <p class="ti_font">统计系综理论和配分函数：</p>
+	<p "page1_mathfont">
+	    \begin{eqnarray}
+	    \mathcal{F}&=&-\frac{1}{\beta}\ln\mathcal{Z}, P=\frac{1}{\beta}\frac{\partial\ln\mathcal{Z}}{\partial V}, \mathcal{G}&=&\mathcal{F}+P\cdot V\\
+	    E&=&-\frac{\partial}{\partial\beta}\ln\mathcal{Z}, \mathcal{H}=E+P\cdot V\\
+	    S&=&k_B\left(\ln\mathcal{Z}-\beta\frac{\partial}{\partial\beta}\ln\mathcal{Z}\right)\\
+	    &\quad&\quad\quad\quad\quad\quad\vdots
+	    \end{eqnarray}
+	</p>
+    </div>
+    <div class="fragment current-visible">
+	<p class="ti_font1">求解凝聚态体系配分函数的困难:</p>
+	<p class="page1mathfont">
+	    \begin{eqnarray}
+	    \mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
+	    &=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)]
+	    \end{eqnarray}
+	    \begin{equation}
+	    \mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{\color{red} \Large 位形积分} (3N\text{-dimensional})}
+	    \end{equation}
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Cluster Expansion</span>:
+	    J.Chem.Phys. <strong>9</strong>,2(1941),
+	    J.Mol.Liq <strong>224</strong>,694(2016),
+	    JOM <strong>72</strong>,2226(2021),
+	    Front.Chem. <strong>8</strong>,757(2020)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Nested Sampling</span>:
+	    J.Phys.Chem.B <strong>114</strong>,10502(2010), Phys.Rev.B <strong>93</strong>,174108(2016),
+	    Phys.Rev.Lett. <strong>120</strong>,250601(2018), Nature Rev. Methods Primer <strong>2</strong>,39(2022)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Advanced Monte-Carlo</span>:
+	    Phys.Rev.Lett. <strong>86</strong>,2050(2001),
+	    Annu.Rev.Chem.Biomol.Eng <strong>3</strong>,369(2012),
+	    Wires Comput.Mol.Sci. <strong>4</strong>,71(2013),
+	    J.Chem.Theory Comput. <strong>10</strong>,2623(2014)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Meta-Dynamics</span>:
+	    PNAS <strong>99</strong>,12562(2002),
+	    Rep.Prog.Phys. <strong>71</strong>,126601(2008),
+	    Annu.Rev.Phys.Chem. <strong>67</strong>,159(2016),
+	    J.Phys.Chem.Lett. <strong>9</strong>,2776(2018)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Quasiharmonic Phonon Model</span>:
+	    Prog.Mater.Sci. <strong>55</strong>,247(2010),
+	    Rev.Mod.Phys. <strong>84</strong>,975(2012),
+	    Rev.Mod.Phys. <strong>73</strong>,515(2001),
+	    Rev.Mod.Phys. <strong>74</strong>,11(2002)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Semi-Empirical EOS</span>:
+	    J.Phys.:Condens.Matter <strong>8</strong>,67(1996),
+	    Rep.Prog.Phys. <strong>68</strong>,341(2005),
+	    High Press.Res. <strong>16</strong>,81(1998),
+	    Z.Kristallogr. <strong>216</strong>,473(2001)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+  #+begin_export html
+  <img class="logo2" src="../pics/FDU-log.png"/>
+  <img class="logo-imp2" src="../pics/imp-logo.png"/>
+  <div class="ti_font" style="color: cyan">Direct Integral Approach(DIA):重新诠释积分的意义</div>
+  <div class="r-stack">
+      <div class="page2_img fragment current-visible">
+	  <div class="page2_img_pic1">
+	      <img src="../pics/int1d.png" height="420" width="350"/>
+	      <p class="mathfont3">$$I_{1D}\rightarrow\text{\Large 等效长度}$$</p>
+	  </div>
+	  <div class="page2_img_pic2">
+	      <img src="../pics/int2d.png" height="420" width="350"/>
+	      <p class="mathfont3">$$I_{2D}\rightarrow\text{\Large 等效面积}$$</p>
+	  </div>
+	  <p class="page2_img_text ti_font1", style="color:red">
+	      \begin{equation}
+	      I_{ND}\longrightarrow N\text{\large 维等效体积}
+	      \end{equation}
+	  </p>
+      </div>
+      <div class="page2_anim fragment current-visible">
+	  <div class="page2_anim_text page2_math">
+	      <p>
+		  \begin{eqnarray}
+		  \mathcal Q&=&\int dq^{3N}\exp[-\beta U(q^{3N})], \\
+		  \textcolor{red}{U'(q'^{3N})}&\textcolor{red}{=}&\textcolor{red}{U(q^{3N})-U_0},\quad \textcolor{red}{q'_i=q_i-q_0},\\
+		  \mathcal{Q}&=&e^{-\beta U_0}\int dq'^{3N}\exp[-\beta U'(q'^{3N})]=e^{-\beta U_0}\mathcal{Q}'\\
+		  \mathcal{Q}'&=&\prod_{i=1}^{3N}\mathcal{L}_i, \quad\mathcal{L}_i=\int e^{-\beta U'(0\ldots q'_i\ldots 0)}dq'_i\\
+		  \mathcal Q&=&e^{-\beta U_0}{\mathcal{L}}^{3N} ({\color{red}3N\textbf{\large 重积分}\rightarrow 1\textbf{\large 重积分}})
+		  \end{eqnarray}
+	      </p>
+	      <ul>
+		  <li>计算普适性： 无参数计算位形积分</li>
+		  <li>计算效率： 提高<span style="color: red">4</span>个数量级</li>
+		  <li>计算精度： 提高<span style="color: red">1</span>个数量级</li>
+		  <li>结合量子力学第一性原理计算配分函数</li>
+	      </ul>
+	  </div>
+	  <img class="page2_anim1" src="../pics/BCC-move-V.gif" height="280" width="420"/>
+	  <img class="page2_anim2" src="../pics/BCC-potential.gif" height="280" width="420"/>
+      </div>
+  </div>
+  <p class="page2_ref">
+      J.Phys.Condens.Matter <strong>33</strong>,115901(2021), 
+      ibid., <strong>33</strong>,085901(2020),
+      Nanomaterials <strong>9</strong>,978(2019),
+      Entropy <strong>21</strong>,1050(2019)
+  </p>
+  #+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA的应用：金属锆的相变</div>
+<br>
+<div class="r-stack">
+    <div fragment current-visible">
+	<div class="page3_v">
+	    <div class="page3_vlist1">
+		<ul style="font-size: 25px">
+		    <li>Zr: α → ω → β</li>
+		    <li>实验测量:</li>
+		    <li> α → ω: 5-15GPa</li>
+		    <li> β: isostructural相变 </li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist2">
+		<ul style="font-size: 25px">
+		    <li>理论计算:</li>
+		    <li>0K计算: α → ω 相变压强 ∼ 0GPa  </li>
+		    <li>声子模型计算: α → ω 相变压强 1-3GPa  </li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist3">
+		<ul style="font-size: 25px">
+		    <li>DIA计算结果:</li>
+		    <li>α → ω相变压强 6.93GPa</li>
+		    <li>β相没有isostructure相变</li>
+		    <li>EOS: <0.7% (35GPa以上)</li>
+		</ul>
+	    </div>
+	</div>
+	<div class="page3_dia">
+	    <img class="page3_dia1" src="../pics/zr-alpha.png" height="320" width="440"/>
+	    <img class="page3_dia2" src="../pics/zr-beta.png" height="320" width="440"/>
+	    <img class="page3_dia3" src="../pics/zr-dia-pv.png" height="320" width="440"/>
+	</div>
+	<p class="page3_ref">
+           NBY J.Phys.:Condens.Matter <strong>34</strong>,505402(2022)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA的应用：金属铝的相变</div>
+<br>
+<div class="r-stack">
+    <div fragment current-visible">
+	<div class="page3_v">
+	    <div class="page3_vlist1">
+		<ul style="font-size: 25px">
+		    <li>Al: FCC → HCP → BCC</li>
+		    <li>实验测量:</li>
+		    <li>Dewaele et al.(2018)测量值: 198、360GPa</li>
+		    <li>其它实验测量值：220、320GPa</li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist2">
+		<ul style="font-size: 25px">
+		    <li>理论计算:</li>
+		    <li>0K计算相变压强: 170、380GPa</li>
+		    <li>声子模型计算相变压强: 232、277GPa</li>
+		    <li>Nested Sampling计算相变压强: 20、50GPa(EAM经验势)</li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist3">
+		<ul style="font-size: 25px">
+		    <li>DIA计算结果:</li>
+		    <li>相变压强： 194、361GPa</li>
+		    <li>EOS: <3% (至500GPa)</li>
+		</ul>
+	    </div>
+	</div>
+	<div class="page3_dia">
+	    <img class="page3_dia1" src="../pics/al-dia-300k.png" height="320" width="440"/>
+	    <img class="page3_dia2" src="../pics/al-dia-pv.png" height="320" width="440"/>
+	    <img class="page3_dia3" src="../pics/al-thermal.png" height="320" width="440"/>
+	</div>
+	<p class="page3_ref">
+	   NBY et al., arXiv:<strong>2204.07318</strong>(2022)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA的应用：金属钒的相变</div>
+<br>
+<div class="r-stack">
+    <div fragment current-visible">
+	<div class="page3_v">
+	    <div class="page3_vlist1">
+		<ul style="font-size: 25px">
+		    <li>V: BCC → Rhombohedral(RH1, Δα∼1%)</li>
+		    <li> BCC → RH1@ ∼60GPa 或 ∼34GPa</li>
+		    <li>低于300GPa没有相变(Akahama et al.(2021))</li>
+		    <li>|Δα|∼0.1%(Stevenson et al., PRB(2021))</li>
+		    <li>BCC → RH2(Δα<0) → RH1(Δα>0)</li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist2">
+		<ul style="font-size: 25px">
+		    <li>理论计算:</li>
+		    <li>BCC → RH1@60GPa</li>
+		    <li>RH1 → RH2@120GPa</li>
+		    <li>RH2 → BCC@280GPa</li>
+		    <li>|Δα|∼1%</li>
+		</ul>
+	    </div>
+	    <div class="page3_vlist3">
+		<ul style="font-size: 25px">
+		    <li>DIA计算结果</li>
+		    <li>|Δα|∼0.1%</li>
+		    <li>BCC → RH2 → RH1</li>
+		    <li>EOS: <1%</li>
+		</ul>
+	    </div>
+	</div>
+	<div class="page3_dia">
+	    <img class="page3_dia1" src="../pics/v-dia1.png" height="340" width="460"/>
+	    <img class="page3_dia2" src="../pics/v-dia2.png" height="340" width="460"/>
+	    <img class="page3_dia3" src="../pics/v-dia3.png" height="340" width="460"/>
+	</div>
+	<p class="page3_ref">
+	   NBY et al., J.Phys.:Condens.Matter  <strong>34</strong>,425404(2022)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA的高温状态方程计算</div>
+<br>
+<div class="pagelast">
+    <div class="pagelast1">
+	<img src="../pics/au-isothermal.png" height="340" width="420"/></br>
+	<p class="refnew">
+	    金属金的等温曲线</br>
+	    (in preparation)
+	</p>
+    </div>
+    <div class="pagelast2">
+	<img src="../pics/hugoniot.png" height="340" width="420"/></br>
+	<p class="refnew">
+	    金属金的冲击Hugoniot曲线</br>
+	    (in preparation)
+	</p>
+    </div>
+    <div class="pagelast3">
+	<img src="../pics/w.png" height="340" width="420"/></br>
+	<p class="refnew">
+	    金属钨的高温状态方程</br>
+	    TYY, NBY et al., arXiv:<strong>2210.16736</strong>(2022)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">总结与展望</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>应用DIA从统计系综理论角度研究固体相变和状态方程</li>
+	<li>普适性，无参数</li>
+	<li>计算效率提高4个数量级</li>
+	<li>计算精度提高1个数量级</li>
+	<li>结合量子力学第一性原理计算位形积分</li>
+    </ul>
+</div>
+<br>
+<br>
+<div class="ti_font" style="color: cyan">致谢</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>翁祖谦教授 (上海科技大学)</li>
+    </ul>
+</div>
+#+end_export
+* 
+  #+begin_export html
+  <h2, class="title"> Thanks for your attentions and comments are <em>MOST</em> welcome!</h2>
+  #+end_export
+* 
+#+begin_export html
+<div class="ti_font" style="color: cyan">Appendix: Mathematics Proof of DIA (2D Integral)</div>
+<br>
+<p class="appdmath">
+    \begin{eqnarray}
+    &&I_{2D}=\int_0^{a_1}dx\int_0^{a_2}dye^{-U(x,y)},\\
+    &&X'(x)=\int_0^xe^{-U(\xi,0)}d\xi, Y'(y)=\int_0^ye^{-U(0,\xi)}d\xi.\\
+    &&X'(0)=0, Y'(0)=0\\
+    &&a'_1=\int_0^{a_1}e^{-U(\xi,0)}d\xi,a'_2=\int_0^{a_2}e^{-U(0,\xi)}d\xi\\
+    &&I_{2D}=\int_0^{a'_1}dX'\int_0^{a'_2}dY'e^{-F(X',Y')}.\\
+    &&\text{If U(x,y) is positive definite and has a minimum at the origin (x=0, y=0), U(0,0)=0},\\
+    &&F(0,0)=0,\frac{\partial F}{\partial X'}{\Big |}_0=\frac{\partial F}{\partial Y'}{\Big |}_0=0\\
+    &&I_{2D}\simeq a'_1a'_2.
+    \end{eqnarray}
+</p>
+#+end_export
+* 
+#+reveal_html: <div class="ti_font" style="color: cyan">Temperature Effects I</div>
+#+reveal_html: <br>
+#+reveal_html: <img src="../pics/al-thermal.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/zr-thermal.png" height="350" width="450"/>
+
+* 
+#+reveal_html: <div class="ti_font" style="color: cyan">Temperature Effects II</div>
+#+reveal_html: <br>
+#+reveal_html: <img src="../pics/au-isothermal.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/hugoniot.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/w.png" height="350" width="450"/>
+
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA to Zirconium</div>
+<br>
+<div class="r-stack">
+    <div class="page5_zr fragment current-visible">
+	<div class="page5_zr1">
+	    <img src="../pics/zr-prb-2018.png" height="390" width="440"/>
+	</div>
+	<div class="page5_zr2">
+	    <img src="../pics/zr-prb-2020.png" height="390" width="440"/>
+	</div>
+	<div class="page5_zr3">
+	    <img src="../pics/zr-dia-table.png" height="390" width="440"/>
+	</div>
+	<div class="page5_zrref">
+	    <div class="list" style="color: red">
+		<ul>
+		    <li>Isostructural phase transition in β-phase?</li>
+		    <li> Theoretical transition pressure of α→ω much smaller than experimental 5-15 GPa?</li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+	        J.Phys.Soc.Japan <strong>60</strong>,3221(2006), Phys.Rev.B <strong>98</strong>,220101(R)(2018),</br>
+		Phys.Rev.B <strong>102</strong>,184105(2020), J.Phys.:Condens.Matter <strong>32</strong>,12LT02(2019),</br>
+		High Press.Res. <strong>41</strong>,247(2021)
+	    </p>
+	</div>
+    </div>
+    <div class="page5_zr fragment current-visible">
+	<div class="page5_zr1">
+	    <img src="../pics/zr-alpha.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zr2">
+	    <img src="../pics/zr-beta.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zr3">
+	    <img src="../pics/zr-dia-pv.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zrref">
+	    <div class="list" style="color: cyan">
+		<ul>
+		    <li>Confirmation of EOSs by latest experiments</li>
+		    <li>No isostructural phase transition in β-phase </li>
+		    <li>Transition pressure of α→ω: 6.93 GPa</li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+	NBY et al., J.Phys.:Condens.Matter  <strong>34</strong>,425404(2022)
+	    </p>
+	</div>
+    </div>
+</div>
+#+end_export
+
+* 
+	   \begin{equation}
+	   \mathcal{Q}=\mathcal{Q}_{BCC}+\mathcal{Q}_{FCC}+\mathcal{Q}_{HCP}+\mathcal{Q}_{solid}+\mathcal{Q}_{liquid}+\mathcal{Q}_{gas}+\ldots
+	   \end{equation}
+	   $$\Downarrow$$
+	   $$\mathcal{Q}_{s1}(\mathbf{q}^{N}, V, T, P)\quad {\color{red} ? (>, <, =)}\quad  \mathcal{Q}_{s2}(\mathbf{q}^{N}, V, T, P)$$
+
+* 
+$\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}$, $\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}$, 
+
