@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(宁博元)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="file:///Users/nby/.emacs.d/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="file:///Users/nby/.emacs.d/reveal.js/dist/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="nby-reveal.css"/>
+<script type="text/javascript" src="/Users/nby/.emacs.d/MathJax-master/es5/tex-chtml-full.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background-size="1600px 900px" data-background-opacity="0.03"><img class="logo" src="../pics/FDU-log.png"/>
+<img class="logo-imp" src="../pics/imp-logo.png"/>
+<h1, class="title">求解凝聚态体系配分函数的新方法 --- DIA</h1><br>
+<br>
+<h2, class="t3">宁博元<sup>&#8224</sup>, 宁西京<sup>&#8225</sup></h2><br>
+<h4, class="t4">复旦大学现代物理研究所</h4><br>
+<h4, class="t4">复旦大学核科学与技术系</h4><br>
+<h5, class="t5"><sup>&#8224</sup>byning@fudan.edu.cn,  <sup>&#8225</sup>xjning@fudan.edu.cn</h5><br>
+<br>
+<h6, class="t5">CPS2022 &#8729 深圳</h5><br>
+</section>
+<section>
+<section id="slide-orgd096c5e">
+<h2 id="orgd096c5e"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font", style="color: cyan">问题的提出：凝聚态体系配分函数中的高维位形积分？</div>
+<!-- <div class="r-stack">
+     <div class="fragment current-visible"> -->
+<p class="page1mathfont">
+    \begin{eqnarray}
+    \mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
+    &=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)]
+    \end{eqnarray}
+    \begin{equation}
+    \mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{\color{red} \Large 位形积分} (3N\text{-dimensional})}
+    \end{equation}
+</p>
+<p class="ref">
+    <span style="color: yellow">Cluster Expansion</span>:
+    J.Chem.Phys. <strong>9</strong>,2(1941),
+    J.Mol.Liq <strong>224</strong>,694(2016),
+    JOM <strong>72</strong>,2226(2021),
+    Front.Chem. <strong>8</strong>,757(2020)
+</p>
+<p class="ref">
+    <span style="color: yellow">Nested Sampling</span>:
+    J.Phys.Chem.B <strong>114</strong>,10502(2010), Phys.Rev.B <strong>93</strong>,174108(2016),
+    Phys.Rev.Lett. <strong>120</strong>,250601(2018), Nature Rev. Methods Primer <strong>2</strong>,39(2022)
+</p>
+<p class="ref">
+    <span style="color: yellow">Advanced Monte-Carlo</span>:
+    Phys.Rev.Lett. <strong>86</strong>,2050(2001),
+    Annu.Rev.Chem.Biomol.Eng <strong>3</strong>,369(2012),
+    Wires Comput.Mol.Sci. <strong>4</strong>,71(2013),
+    J.Chem.Theory Comput. <strong>10</strong>,2623(2014)
+</p>
+<p class="ref">
+    <span style="color: yellow">Meta-Dynamics</span>:
+    PNAS <strong>99</strong>,12562(2002),
+    Rep.Prog.Phys. <strong>71</strong>,126601(2008),
+    Annu.Rev.Phys.Chem. <strong>67</strong>,159(2016),
+    J.Phys.Chem.Lett. <strong>9</strong>,2776(2018)
+</p>
+<p class="ref">
+    <span style="color: yellow">Quasiharmonic Phonon Model</span>:
+    Prog.Mater.Sci. <strong>55</strong>,247(2010),
+    Rev.Mod.Phys. <strong>84</strong>,975(2012),
+    Rev.Mod.Phys. <strong>73</strong>,515(2001),
+    Rev.Mod.Phys. <strong>74</strong>,11(2002)
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org88cd74a">
+<h2 id="org88cd74a"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">Direct Integral Approach (DIA):高维积分的重新诠释</div>
+<div class="r-stack">
+    <div class="page2_img fragment current-visible">
+	<div class="page2_img_pic1">
+	    <img src="../pics/int1d.png" height="400" width="350"/>
+	    <p class="mathfont3">$$I_{1D}\rightarrow\text{等效长度}$$</p>
+	</div>
+	<div class="page2_img_pic2">
+	    <img src="../pics/int2d.png" height="400" width="350"/>
+	    <p class="mathfont3">$$I_{2D}\rightarrow\text{等效面积}$$</p>
+	</div>
+	<p class="page2_img_text ti_font1", style="color:red">
+	    \begin{equation}
+	    I_{ND}\longrightarrow N\text{维等效体积}
+	    \end{equation}
+	</p>
+    </div>
+    <div class="page2_anim fragment current-visible">
+	<p class="page2_anim_text page2_math">
+	    \begin{eqnarray}
+	    \mathcal Q&=&\int dq^{3N}\exp[-\beta U(q^{3N})], \\
+	    \textcolor{red}{U'(q'^{3N})}&\textcolor{red}{=}&\textcolor{red}{U(q^{3N})-U_0},\quad \textcolor{red}{q'_i=q_i-q_0},\\
+	    \mathcal{Q}&=&e^{-\beta U_0}\int dq'^{3N}\exp[-\beta U'(q'^{3N})]=e^{-\beta U_0}\mathcal{Q}'\\
+	    \mathcal{Q}'&\simeq&\prod_{i=1}^{3N}\mathcal{L}_i, \quad\mathcal{L}_i=\int e^{-\beta U'(0\ldots q'_i\ldots 0)}dq'_i\\
+	    \end{eqnarray}
+	    $$\Downarrow$$
+	    \begin{eqnarray}
+	    &\mathcal{Q}=e^{-\beta U_0}\mathcal{L}^{3N}\\
+	    &{\color{red}3N\text{重积分}\rightarrow \text{1重积分}}
+	    \end{eqnarray}
+	</p>
+	<div class="page2_ci">
+	<img src="../pics/ciphase.png" height="420" width="400"/>
+	<p class="page2_math">通过DIA缩小3N维等效体积</p>
+	</div>
+    </div>
+    <div class="fragment current-visible">
+	<p class="appdmath">
+	    \begin{eqnarray}
+	    &&I_{2D}=\int_0^{a_1}dx\int_0^{a_2}dye^{-U(x,y)},\\
+	    &&X'(x)=\int_0^xe^{-U(\xi,0)}d\xi, Y'(y)=\int_0^ye^{-U(0,\xi)}d\xi.\\
+	    &&X'(0)=0, Y'(0)=0\\
+	    &&a'_1=\int_0^{a_1}e^{-U(\xi,0)}d\xi,a'_2=\int_0^{a_2}e^{-U(0,\xi)}d\xi\\
+	    &&I_{2D}=\int_0^{a'_1}dX'\int_0^{a'_2}dY'e^{-F(X',Y')}.\\
+	    &&\text{If U(x,y) is positive definite and has a minimum at the origin (U(0,0)=0)},\\
+	    &&F(0,0)=0,\frac{\partial F}{\partial X'}{\Big |}_0=\frac{\partial F}{\partial Y'}{\Big |}_0=0\\
+	    &&I_{2D}\simeq a'_1a'_2.
+	    \end{eqnarray}
+	</p>
+    </div>
+</div>
+<p class="page2_ref">
+    J.Phys.Condens.Matter <strong>33</strong>,115901(2021) 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgde49686">
+<h2 id="orgde49686"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">DIA方法的验证</div>
+<br>
+<div class="r-stack">
+    <div class="page_exam1 fragment current-visible">
+	<div class="page_examplist">
+	    <ul>
+		<li>计算普适性： 无参数计算位形积分</li>
+		<li>计算效率： 与NS方法相比提高4个数量级 (一维积分)</li>
+		<li>计算精度检验：</li>
+		<ul>
+		    <li style="color: yellow">直接与实验对比(势函数的准确性)？</li>
+		    <li>分子动力学模拟验证 (内能，压强)</li>
+		    <li>相同作用势函数&#8594排除势函数影响</br>(L-J, EAM, T-B, Tersoff, <em>ab initio</em>)</li>
+		</ul>
+	    </ul></br>
+	</div>
+	<div class="page_jctc">
+	    <img src="../pics/jctc.png" height="380" width="380"/></br>
+	    <p class="ref">J.Chem.Theory Comput.<strong>9</strong>,165(2013)</p>
+	</div>
+    </div>
+    <div class="fragment current-visible">
+	<div>
+	    <ul>
+		<li>测试体系: 固液金属铜，固体氩，C<sub>60</sub>分子，二维材料</li>
+		<li>势函数: Lennard-Jones, Tight-Binding, EAM, Tersoff</li>
+		<li>相对误差: 内能<1%， 压强<3%</li>
+	    </ul></br>
+	</div>
+	<div class="page_exam2">
+	    <div class="page_exam2_1">
+		<img src="../pics/c60.png" height="320" width="500"/>
+		<p class="caption">C<sub>60</sub>分子 (Brenner势)</p>
+	    </div>
+	    <div class="page_exam2_2">
+		<img src="../pics/argon.png" height="320" width="430"/>
+		<p class="caption">固体氩 (4000个原子, L-J势)</p>
+	    </div>
+	</div>
+	<p class="page_examref">
+	    J.Phys.Condens.Matter <strong>33</strong>,115901(2021),
+	    Entropy <strong>21</strong>,1050(2019)
+	</p>
+    </div>
+    <div class="page_exam3 fragment current-visible">
+	<div class="page_exam3_1">
+	    <img src="../pics/ns1.png" height="380" width="530"/>
+	    <p class="caption">DIA与Nested Sampling计算精度比较</p>
+	</div>
+	<div class="page_exam3_2">
+	    <img src="../pics/diavsqha.png" height="380" width="490"/>
+	    <p class="caption">DIA与声子模型计算精度比较</p>
+	</div>
+	<div class="page_exam3_4">
+	    <ul>
+		<li>计算精度: 提高约1个数量级 </li>
+		</ul>
+	    <p class="page_examref">
+		Entropy <strong>21</strong>,1050(2019),
+		J.Phys.Condens.Matter <strong>33</strong>,085901(2020)
+	    </p>
+	</div>
+    </div>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgbf17eff">
+<h2 id="orgbf17eff"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA方法的应用: 二维材料有限温度下的结构稳定性</div>
+<br>
+<div class="page_mol">
+    <div class="page_c60 page_examlist">
+	<ul>
+	    <li>石墨烯、石墨炔在铜[111]、镍[111]表面的自由能计算</li>
+	    <li>硅烯在银[110]、[111]表面的自由能计算</li>
+	    <li>硅烯在银[111]表面的最佳生长温度为400K (实验数据493-580K)</li>
+	    <li>原子相互作用势：密度泛函理论计算</li>
+	</ul>
+    </div>
+    <div class="page_2d">
+	<img src="../pics/nano.JPEG" height="390" width="650"/>
+	<p class="refnew">
+	    通过自由能预测硅烯在银[111]表面的最佳生长温度</br>
+	</p>
+    </div>
+    <p class="page_molref">Nanomaterials <strong>9</strong>,978(2019)</p>
+    
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org1db5728">
+<h2 id="org1db5728"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">DIA方法的应用: 体材料极端条件下的相变和状态方程</div>
+<br>
+<div class="r-stack">
+    <div class="page_bulk1 fragment current-visible">
+	<div class="page_bulk1_1 page_examlist">
+	    <ul>
+		<li>高压结构相变：金属钒、铝、锆 (压强至600GPa)</li>
+		<li>高温高压状态方程：金属铜、钨、金、铱(温度至3000K，压强至600GPa)</li>
+		<li>原子相互作用势：密度泛函理论计算</li>
+	    </ul>
+	</div>
+	<div class="page_bulk1_2">
+	    <img src="../pics/v-dia1.png" height="350" width="470"/></br>
+	    <p class="refnew">
+		金属钒的高压状态方程</br>
+		J.Phys.Condens.Matter <strong>34</strong>,425404(2022)
+	    </p>
+	</div>
+	<div class="page_bulk1_3">
+	    <img src="../pics/w.png" height="350" width="470"/></br>
+	    <p class="refnew">
+		金属钨的高温状态方程</br>
+		arXiv:<strong>2210.16736</strong>(2022)
+	    </p>
+	</div>
+    </div>
+    <div class="page_bulk2 fragment current-visible">
+	<div class="page_bulk2_1">
+	    <ul style="font-size: 25px">
+		<li>Zr: α → ω → β </li>
+		<li>0K计算: α → ω相变压强 ∼ 0GPa  </li>
+		<li>声子模型计算: α → ω相变压强 1-3GPa  </li>
+		<li>实验测量值: α → ω相变压强 5-15GPa  </li>
+		<li>DIA计算: α → ω相变压强 6.93GPa  </li>
+	    </ul>
+	    <img src="../pics/zr-dia-pv.png" height="370" width="450"/>
+	    <p class="refnew">
+	        J.Phys.:Condens.Matter <strong>34</strong>,505402(2022)
+	    </p>
+	</div>
+	<div class="page_bulk2_2">
+	    <ul style="font-size: 25px">
+		<li>Al: FCC → HCP → BCC  </li>
+		<li>0K计算相变压强: 170、380GPa</li>
+		<li>声子模型计算相变压强: 232、277GPa</li>
+		<li>Nested Sampling计算相变压强: 20、50GPa(EAM经验势)</li>
+		<li>Dewaele et al.实验测量值: 198、360GPa </li>
+		<li>其它实验测量值： 220、320GPa</li>
+		<li>DIA计算值： 194、361GPa</li>
+	    </ul>
+	    <img src="../pics/al-dia-pv.png" height="320" width="390"/>
+	    <p class="refnew">
+	        arXiv:<strong>2204.07318</strong>(2022)
+	    </p>
+	</div>
+    </div>
+</div>
+<!-- <div class="page_bulk fragment current-visible">
+     <div class="page_bulk1_3">
+     <img src="../pics/al-dia-pv.png" height="340" width="420"/></br>
+     <p class="refnew">
+     Phase Transitions of Aluminium</br>
+     arXiv:<strong>2204.07318</strong>(2022)
+     </p>
+     </div>
+     <div class="page_bulk2">
+     <img src="../pics/hugoniot.png" height="340" width="420"/></br>
+     <p class="refnew">
+     Shock Compression of Gold</br>
+     (unpublished)
+     </p>
+     </div>
+     <div class="page_bulk3">
+     <img src="../pics/tbpv.png" height="340" width="420"/></br>
+     <p class="refnew">
+     EOS of Copper</br>
+     J.Phys.Condens.Matter <strong>33</strong>,115901(2021)
+     </p>
+     </div>
+     </div> -->
+</section>
+</section>
+<section>
+<section id="slide-org5cb49f1">
+<h2 id="org5cb49f1"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">总结与展望</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>DIA方法基于对积分意义的重新诠释</li>
+	<li>DIA方法的计算效率提高4个数量级</li>
+	<li>DIA方法的计算精度提高1个数量级</li>
+	<li>DIA方法的普适性：分子、低维材料、体材料</li>
+	<li>结合量子力学第一性原理计算配分函数</li>
+    </ul>
+</div>
+<br>
+<br>
+<div class="ti_font" style="color: cyan">致谢</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>翁祖谦教授 (上海科技大学)</li>
+    </ul>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org407e980">
+<h2 id="org407e980"></h2>
+<!-- <img class="logo2" src="../pics/FDU-log.png"/>
+     <img class="logo-imp2" src="../pics/imp-logo.png"/> -->
+<h2, class="title"> Thanks for your attentions and comments are <em>MOST</em> welcome!</h2>
+</section>
+</section>
+<section>
+<section id="slide-org391d1fa">
+<h2 id="org391d1fa"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">Implementation of DIA</div>
+<br>
+<div class="page_impl">
+    <p class="page_impl1 page_implmath">
+	\begin{eqnarray}
+	&\mathcal Q=e^{-\beta U_0}\mathcal L^{3N}\\
+	&\text{ (BCC, FCC...)}\\
+	\\
+	&\mathcal Q=e^{-\beta U_0}\left(\mathcal L_x\mathcal L_y\mathcal L_z\right)^N\\
+	&\text{ (HCP...)}\\
+	\\
+	&\mathcal Q=e^{-\beta U_0}\prod_{I=1}^{M}\left(\mathcal L_{I_{x}}\mathcal L_{I_{y}}\mathcal L_{I_{z}}\right)^{N_I}\\
+	&\text{(molecules, clusters, asymmetric structures...)}
+	\end{eqnarray}
+    </p>
+    <div class="page_impl2">
+	<img class="page2_anim1" src="../pics/BCC-move-V.gif" height="250" width="320"/></br>
+	<img class="page2_anim2" src="../pics/BCC-potential.gif" height="250" width="320"/>
+	<!-- <p class="page_implmath2">Potential-Energy Curve U'</p> -->
+    </div>
+    <div class="page_impl3">
+	<p class="page2_ref">
+	    J.Phys.Condens.Matter <strong>33</strong>,115901(2021)
+	</p>
+    </div>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org9c05fe3">
+<h2 id="org9c05fe3">appendix slide</h2>
+<p>
+\(\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}\), \(\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}\) 
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="file:///Users/nby/.emacs.d/reveal.js/dist/reveal.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+margin: 0.05, transition: "cube", slideNumber: "h.v", width: 1600
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+\beamer@sectionintoc {1}{\uppercase {i}. 问题的提出}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{凝聚态体系的自由能$\mathcal F$和配分函数$\mathcal Z$？}{2}{0}{1}
+\beamer@sectionintoc {2}{\uppercase {ii}. 求解配分函数的理论模型：DIA}{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{重新诠释高维积分的意义}{3}{0}{2}
+\beamer@sectionintoc {3}{\uppercase {iii}. 应用DIA计算固体相变及状态方程}{7}{0}{3}
+\beamer@subsectionintoc {3}{1}{金属钒(V)}{7}{0}{3}
+\beamer@subsectionintoc {3}{2}{金属铝(Al)}{8}{0}{3}
+\beamer@subsectionintoc {3}{3}{金属锆(Zr)}{9}{0}{3}
+\beamer@sectionintoc {4}{\uppercase {iv}. 总结与展望}{10}{0}{4}

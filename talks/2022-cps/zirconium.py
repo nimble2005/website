@@ -1,0 +1,370 @@
+from matplotlib import pyplot as plt
+import numpy as np
+from matplotlib.pyplot import MultipleLocator
+import sys
+sys.path.append("/home/nby/study/NBY-Lib/")
+from nbyplot import myplot, myscatter, myfig_setup_notitle, nbymarker, nbycolor
+import units
+sys.path.append("/home/nby/study/zirconium")
+from exp import exp1_run1, exp1_run2, exp1_run3
+from exp import exp2_run1_alpha, exp2_run1_omega
+from exp import exp2_run2_beta, exp2_run3_beta
+from exp import exp3_run1, exp3_run2
+from exp import exp4_alpha, exp4_omega, exp4_beta
+from exp import exp5_alpha, exp5_omega, exp5_beta
+
+
+def main():
+    Fontweight = "bold"
+    Fontsize = 14
+    phasecolor = {"alpha": "magenta", "omega": "deepskyblue",
+                  "beta": "darkorange", "dia": "black"}
+    phaseline = {"dia": "--"}
+    file_dir = "/home/nby/study/zirconium/pveos/"
+    hcp3 = np.loadtxt(file_dir + "HCP3-notemp-300K.dat")
+    bcc300 = np.loadtxt(file_dir + "BCC-notemp-300K.dat")
+    omega1 = np.loadtxt(file_dir + "OMEGA1-notemp-300K.dat")
+    # ------------------- volume change -------------------------
+    vol0 = np.float64(23.5798990)
+    hcp_point = np.array([6.93, 24.83])
+    hcp_v = hcp3[hcp3[:, 0] <= hcp_point[0]][0]
+    hcp_v = hcp_v[1]
+    # print(hcp_v)
+    omega_v1 = omega1[omega1[:, 0] > hcp_point[0]][-1]
+    omega_v1 = omega_v1[1]
+    omega_v2 = omega1[omega1[:, 0] <= hcp_point[1]][0]
+    omega_v2 = omega_v2[1]
+    # print(omega_v1, omega_v2)
+    bcc_v = bcc300[bcc300[:, 0] > hcp_point[1]][-1]
+    bcc_v = bcc_v[1]
+    # print(bcc_v)
+    delta_v1 = (hcp_v - omega_v1) / hcp_v * 100
+    delta_v2 = (omega_v2 - bcc_v) / omega_v2 * 100
+    # print(r"\alpha\rightarrow\omega volume change: ", delta_v1, "%")
+    # print(r"\omega\rightarrow\beta volume change: ", delta_v2, "%")
+    # ------------------- DIA EOS -------------------------
+    hcp = hcp3[hcp3[:, 0] > 0]
+    hcp = hcp[hcp[:, 0] <= hcp_point[0]]
+    omega = omega1[omega1[:, 0] > hcp_point[0]]
+    omega = omega[omega[:, 0] <= hcp_point[1]]
+    bcc = bcc300[bcc300[:, 0] > hcp_point[1]]
+    hcp = hcp[-1::-1, :]
+    omega = omega[-1::-1, :]
+    bcc = bcc[-1::-1, :]
+    dia = np.concatenate([hcp, omega, bcc], axis=0)
+    # ----------------------------------------------------------------
+    figpv, axpv = plt.subplots()
+    # dia_b, = myplot(axpv, bcc[:, 0], bcc[:, 1],
+    #                 {"color": phasecolor["dia"],
+    #                  "linestyle": "-",
+    #                  "linewidth": "1",
+    #                  "label": "DIA"})
+    # dia_o, = myplot(axpv, omega[:, 0], omega[:, 1],
+    #                 {"color": phasecolor["dia"],
+    #                  "linestyle": "-",
+    #                  "linewidth": "1",
+    #                  "label": "DIA"})
+    # dia_a, = myplot(axpv, hcp[:, 0], hcp[:, 1],
+    #                 {"color": phasecolor["dia"],
+    #                  "linestyle": "-",
+    #                  "linewidth": "1",
+    #                  "label": "DIA"})
+    e1_a1, = myplot(axpv, exp2_run1_alpha[0, :], exp2_run1_alpha[1, :],
+                    {"linestyle": "none",
+                     "marker": "H",
+                     "mfc": "none",
+                     "mec": phasecolor["alpha"],
+                     "ms": 3,
+                     "label": r"$\alpha$ Dawaele (2020)"})
+    e1_o1, = myplot(axpv, exp2_run1_omega[0, :], exp2_run1_omega[1, :],
+                    {"linestyle": "none",
+                     "marker": "*",
+                     "mfc": "none",
+                     "mec": phasecolor["omega"],
+                     "ms": 5,
+                     "label": r"$\omega$ Dawaele (2020)"})
+    e1_b1, = myplot(axpv, exp2_run2_beta[0, ::3], exp2_run2_beta[1, ::3],
+                    {"linestyle": "none",
+                     "marker": "s",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5,
+                     "label": r"$\beta$ Dawaele (2020)"})
+    e1_b2, = myplot(axpv, exp2_run3_beta[0, :], exp2_run3_beta[1, :],
+                    {"linestyle": "none",
+                     "marker": "s",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5})
+    e2_b1, = myplot(axpv, exp1_run1[0, ::3], exp1_run1[1, ::3],
+                    {"linestyle": "none",
+                     "marker": "o",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5,
+                     "label": r"$\beta$ Bannon (2021)"})
+    e2_b2, = myplot(axpv, exp1_run2[0, ::3], exp1_run2[1, ::3],
+                    {"linestyle": "none",
+                     "marker": "o",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5})
+    e2_b3, = myplot(axpv, exp1_run3[0, ::3], exp1_run3[1, ::3],
+                    {"linestyle": "none",
+                     "marker": "o",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5})
+    e3_b1, = myplot(axpv, exp3_run1[0, :], exp3_run1[1, :],
+                    {"linestyle": "none",
+                     "marker": "D",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5,
+                     "label": r"$\beta$ Pigott (2020)"})
+    e3_b2, = myplot(axpv, exp3_run2[0, :], exp3_run2[1, :],
+                    {"linestyle": "none",
+                     "marker": "d",
+                     "mfc": "none",
+                     "mec": phasecolor["beta"],
+                     "mew": 0.5,
+                     "ms": 5})
+    e4_a, = myplot(axpv, exp4_alpha[0, :], exp4_alpha[1, :],
+                   {"linestyle": "none",
+                    "marker": "1",
+                    "mfc": "none",
+                    "mec": phasecolor["alpha"],
+                    "ms": 10,
+                    "label": r"$\alpha$ Akahama (1991)"})
+    e4_o, = myplot(axpv, exp4_omega[0, :], exp4_omega[1, :],
+                   {"linestyle": "none",
+                    "marker": "2",
+                    "mfc": "none",
+                    "mec": phasecolor["omega"],
+                    "ms": 8,
+                    "label": r"$\omega$ Akahama (1991)"})
+    e4_b, = myplot(axpv, exp4_beta[0, :], exp4_beta[1, :],
+                   {"linestyle": "none",
+                    "marker": "3",
+                    "mfc": "none",
+                    "mec": phasecolor["beta"],
+                    "ms": 8,
+                    "label": r"$\beta$ Akahama (1991)"})
+    e5_a, = myplot(axpv, exp5_alpha[0, :], exp5_alpha[1, :],
+                   {"linestyle": "none",
+                    "marker": "<",
+                    "mfc": "none",
+                    "mec": phasecolor["alpha"],
+                    "ms": 4,
+                    "label": r"$\alpha$ Stavrou (2018)"})
+    e5_o, = myplot(axpv, exp5_omega[0, :], exp5_omega[1, :],
+                   {"linestyle": "none",
+                    "marker": ">",
+                    "mfc": "none",
+                    "mec": phasecolor["omega"],
+                    "ms": 4,
+                    "label": r"$\alpha$ Stavrou (2018)"})
+    e5_b, = myplot(axpv, exp5_beta[0, :], exp5_beta[1, :],
+                   {"linestyle": "none",
+                    "marker": "v",
+                    "mfc": "none",
+                    "mec": phasecolor["beta"],
+                    "ms": 4,
+                    "label": r"$\alpha$ Stavrou (2018)"})
+    dia_b, = myplot(axpv, dia[:, 0], dia[:, 1],
+                    {"color": phasecolor["dia"],
+                     "linestyle": phaseline["dia"],
+                     "linewidth": "1",
+                     "label": "DIA"})
+    pb, = axpv.plot(exp1_run1[0, 0], exp1_run1[1, 0],
+                    linestyle="none", label="fake")
+    axpv.text(15, 23,
+              r"$T=300K$", color="black",
+              fontsize=18, fontname="Times New Roman")
+    axpv.tick_params(labelsize=13)
+    myfig_setup_notitle(axpv,
+                        r"Pressure (GPa)",
+                        r"Volumes (${\AA}^3$/atom)", Fontsize)
+    # ----------- point out discontinuity -----------------------
+    myscatter(axpv, hcp_point[0], (hcp_v + omega_v1) / 2,
+              {"color": "white",
+               "edgecolors": nbycolor[1],
+               "marker": "o", "s": 50})
+    axpv.annotate(r"$\Delta V_{\alpha\rightarrow\omega}=$" +
+                  str("%.2f" % (delta_v1)+"%"),
+                  xy=(hcp_point[0], (hcp_v + omega_v1) / 2),
+                  xytext=(hcp_point[0] + 10, (hcp_v + omega_v1) / 2),
+                  arrowprops=dict(arrowstyle="<-",
+                                  color=nbycolor[1],
+                                  linestyle="-",
+                                  linewidth=1), color=nbycolor[1], fontsize=9)
+    myscatter(axpv, hcp_point[1], (bcc_v + omega_v2) / 2,
+              {"color": "white",
+               "edgecolors": nbycolor[0],
+               "marker": "o", "s": 50})
+    axpv.annotate(r"$\Delta V_{\omega\rightarrow\beta}=$" +
+                  str("%.2f" % (delta_v2)+"%"),
+                  xy=(hcp_point[1], (bcc_v + omega_v2) / 2),
+                  xytext=(hcp_point[1]-8, (bcc_v + omega_v2) / 2 + 1.9),
+                  arrowprops=dict(arrowstyle="<-",
+                                  color=nbycolor[0],
+                                  linestyle="-",
+                                  linewidth=1), color=nbycolor[0], fontsize=9)
+    # ----------- for lengend format ----------------------------
+    leg0 = axpv.legend([dia_b], ["DIA"],
+                       fontsize=7,
+                       loc=(0.0, 0.45),
+                       frameon=False)
+    leg1 = axpv.legend([pb, e1_a1, e1_o1, e1_b1],
+                       ["Anzellini(2020)", r"$\alpha$-phase",
+                        r"$\omega$-phase", r"$\beta$-phase"],
+                       fontsize=7,
+                       bbox_to_anchor=(-0.01, 0.3, 0.29, 0.17),
+                       frameon=False)
+    leg3 = axpv.legend([pb, e3_b1, e3_b2],
+                       ["Pigott(2019)", r"$\beta$-phase(run1)",
+                        r"$\beta$-phase(run2)"],
+                       fontsize=7,
+                       bbox_to_anchor=(-0.07, 0.11, 0.29, 0.17),
+                       frameon=False)
+    leg2 = axpv.legend([pb, e2_b1],
+                       ["Bannon(2021)", r"$\beta$-phase"],
+                       fontsize=7,
+                       bbox_to_anchor=(-0.09, -0.05, 0.29, 0.17),
+                       frameon=False)
+    leg4 = axpv.legend([pb, e4_a, e4_o, e4_b],
+                       ["Akahama(1991)", r"$\alpha$-phase",
+                        r"$\omega$-phase", r"$\beta$-phase"],
+                       fontsize=7,
+                       bbox_to_anchor=(0.72, 0.15, 0.29, 0.17),
+                       frameon=False)
+    leg5 = axpv.legend([pb, e5_a, e5_o, e5_b],
+                       ["Stavrou(2018)", r"$\alpha$-phase",
+                        r"$\omega$-phase", r"$\beta$-phase"],
+                       fontsize=7,
+                       bbox_to_anchor=(0.22, 0.03, 0.29, 0.17),
+                       frameon=False)
+    axpv.add_artist(leg0)
+    axpv.add_artist(leg1)
+    axpv.add_artist(leg2)
+    axpv.add_artist(leg3)
+    axpv.add_artist(leg4)
+    # -----------------------------------------------------------
+    xmajor = MultipleLocator(20)
+    xminor = MultipleLocator(10)
+    ymajor = MultipleLocator(2)
+    yminor = MultipleLocator(1)
+    axpv.xaxis.set_major_locator(xmajor)
+    axpv.yaxis.set_major_locator(ymajor)
+    axpv.xaxis.set_minor_locator(xminor)
+    axpv.yaxis.set_minor_locator(yminor)
+    axpv.set_xlim(-3, 160)
+    axpv.set_ylim(11.8, 24.3)
+    # ------------------ inset ----------------------------------
+    axinset = figpv.add_axes([0.455, 0.42, 0.44, 0.44])
+    axpv.annotate("",
+                  xy=(50, 17),  # y=0.1x+12
+                  xytext=(58, 17.8),
+                  arrowprops=dict(arrowstyle="<-",
+                                  color=phasecolor["beta"],
+                                  linestyle="-",
+                                  linewidth=1.5), color=nbycolor[4])
+    axinset.grid(which="both", linestyle=":")
+    axinset.tick_params(labelsize=8)
+    myplot(axinset, bcc300[:, 0], bcc300[:, 1],
+           {"color": phasecolor["dia"],
+            "linestyle": phaseline["dia"],
+            "linewidth": "1"})
+    myplot(axinset, exp1_run1[0, ::2], exp1_run1[1, ::2],
+           {"linestyle": "none",
+            "marker": "o",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp1_run2[0, ::2], exp1_run2[1, ::2],
+           {"linestyle": "none",
+            "marker": "o",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp1_run3[0, ::2], exp1_run3[1, ::2],
+           {"linestyle": "none",
+            "marker": "o",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp2_run2_beta[0, ::2], exp2_run2_beta[1, ::2],
+           {"linestyle": "none",
+            "marker": "s",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp2_run3_beta[0, :], exp2_run3_beta[1, :],
+           {"linestyle": "none",
+            "marker": "s",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp3_run1[0, :], exp3_run1[1, :],
+           {"linestyle": "none",
+            "marker": "D",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp3_run2[0, :], exp3_run2[1, :],
+           {"linestyle": "none",
+            "marker": "d",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "mew": 0.5,
+            "ms": 5})
+    myplot(axinset, exp4_beta[0, :], exp4_beta[1, :],
+           {"linestyle": "none",
+            "marker": "3",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "ms": 8})
+    myplot(axinset, exp5_beta[0, :], exp5_beta[1, :],
+           {"linestyle": "none",
+            "marker": "v",
+            "mfc": "none",
+            "mec": phasecolor["beta"],
+            "ms": 5})
+    
+    axinset.set_xlim(35, 70.4)
+    axinset.set_ylim(14.5, 17.8)
+    xmajor = MultipleLocator(5)
+    xminor = MultipleLocator(2.5)
+    ymajor = MultipleLocator(0.5)
+    yminor = MultipleLocator(0.25)
+    axinset.xaxis.set_major_locator(xmajor)
+    axinset.yaxis.set_major_locator(ymajor)
+    axinset.xaxis.set_minor_locator(xminor)
+    axinset.yaxis.set_minor_locator(yminor)
+    axinset.set_xlabel(r"Pressure (GPa)", fontsize=8)
+    axinset.set_ylabel(r"Volumes(${\AA}^3$/atom)", fontsize=8)
+    # myfig_setup(axinset, "",
+    #             r"Pressure (GPa)",
+    #             r"Volumes(${\AA}^3$/atom)", 8)
+    # -----------------------------------------------------------
+    # axinset.grid(which="both")
+    figpv.savefig("./zr.png", bbox_inches="tight",
+                  format="png", dpi=300)
+    figpv.savefig("/home/nby/zly/zr.eps", dpi=300)
+    plt.close(figpv)
+
+
+if __name__ == '__main__':
+    main()

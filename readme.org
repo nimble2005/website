@@ -1,0 +1,8 @@
+#+title: Note for NBY's personal website
+#+author: NBY
+#+date: 2026-06-04
+#+startup: showall
+
+* 20260604
+
+This is the test of the personal website.

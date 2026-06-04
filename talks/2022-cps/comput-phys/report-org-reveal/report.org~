@@ -1,0 +1,443 @@
+#+reveal_properties:
+#+reveal_init_options: margin: 0.05, transition: "cube", slideNumber: "h.v", width: 1600
+#+options: toc:nil num:nil timestamp: nil
+#+REVEAL_MATHJAX_URL: /Users/nby/.emacs.d/MathJax-master/es5/tex-chtml-full.js
+#+reveal_margin: 0.1
+#+reveal_theme: league
+#+reveal_hlevel: 1
+#+reveal_extra_css: nby-reveal.css
+# available theme: black|white|league|beige|sky|night|serif|simple|solarized|blood|moon
+# available transition style: default|cube|page|concave|zoom|linear|fade|none.
+# --------------------title slide---------------------------------------------
+# #+reveal_title_slide: <h1, class="title">Applications of Statistical Ensemble Theory to Study <br>Phase Transitions of Metallic Materials</h1>
+#+reveal_title_slide: <img class="logo" src="../pics/FDU-log.png"/>
+#+reveal_title_slide: <img class="logo-imp" src="../pics/imp-logo.png"/>
+#+reveal_title_slide: <h1, class="title">Computations of Phase Transitions and Equation of State</h1><br>
+#+reveal_title_slide: <h2, class="t2">--- Direct Integral Approach</h2>
+#+reveal_title_slide: <br>
+#+reveal_title_slide: <br>
+#+reveal_title_slide: <h2, class="t3">Bo-Yuan Ning (宁博元)<sup>&#8224</sup>, Xi-Jing Ning (宁西京)<sup>&#8225</sup></h2><br>
+#+reveal_title_slide: <h4, class="t4">Institute of Modern Physics, Fudan University</h4><br>
+#+reveal_title_slide: <h4, class="t4">Department of Nuclear Science and Technology, Fudan University</h4><br>
+#+reveal_title_slide: <h5, class="t5"><sup>&#8224</sup>byning@fudan.edu.cn, <sup>&#8225</sup>xjning@fudan.edu.cn</h5><br>
+#+reveal_title_slide: <br>
+#+reveal_title_slide: <h6, class="t5">CPS2022 &#8729 Shenzhen</h5><br>
+# setup title background
+# #+reveal_title_slide_background: ./img/BCC-potential.gif
+#+reveal_title_slide_background_opacity: 0.03
+#+reveal_title_slide_background_size: 1600px 900px
+#+startup: showall
+# ----------------------------------------------------------------------------
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font", style="color: cyan">Questions: A universal method for phase stability, equations of state?</div>
+<div class="r-stack">
+    <div class="fragment current-visible">
+	<div class="page1img" >
+	    <div  class="page1_1">
+		<img src="../pics/v-2007-0.png" height="350" width="250"/><br>
+		<p class="ref">Phys.Rev.Lett. <strong>98</strong>,085502 (2007)</p>
+	    </div>
+	    <div  class="page1_2">
+		<img src="../pics/al-pt.png" height="350" width="300"/><br>
+		<p class="ref">Nat. Communications <strong>9</strong>,2913 (2018)</p>
+	    </div>
+	    <div  class="page1_3">
+		<img src="../pics/zr-prb-2018.png" height="350" width="330"/><br>
+		<p class="ref">Phys.Rev.B <strong>98</strong>,220101(R) (2018)</p>
+	    </div>
+	    <div  class="page1_4">
+		<img src="../pics/gold-science-2021.png" height="350" width="330"/><br>
+		<p class="ref">Science <strong>372</strong>,1063 (2021)</p>
+	    </div>
+	    <!-- <div class="page1_5">
+		 <p class="page1_math">
+		 \begin{equation}
+		 \mathcal{G}=E-T\cdot S+P\cdot V, \quad P=-\frac{1}{\beta}\frac{\partial\mathcal{F}}{\partial V}
+		 \end{equation}
+		 </p>
+		 </div> -->
+	</div>
+    </div>
+    
+    <div class="fragment current-visible">
+        <p class="ti_font", style="color: red">Partition Function Gives All the Information:</p>
+	<p "page1_mathfont">
+	    \begin{eqnarray}
+	    \mathcal{F}&=&-\frac{1}{\beta}\ln\mathcal{Z}, P=\frac{1}{\beta}\frac{\partial\ln\mathcal{Z}}{\partial V}, \mathcal{G}&=&\mathcal{F}+P\cdot V\\
+	    E&=&-\frac{\partial}{\partial\beta}\ln\mathcal{Z}, \mathcal{H}=E+P\cdot V\\
+	    S&=&k_B\left(\ln\mathcal{Z}-\beta\frac{\partial}{\partial\beta}\ln\mathcal{Z}\right)\\
+	    &\quad&\quad\quad\quad\quad\quad\vdots
+	    \end{eqnarray}
+	</p>
+    </div>
+    <div class="fragment current-visible">
+	<p class="ti_font1", style="color: red">The Dilemma of Solving Partition Function:</p>
+	<p class="page1mathfont">
+	    \begin{eqnarray}
+	    \mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
+	    &=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)]
+	    \end{eqnarray}
+	    \begin{equation}
+	    \mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{\color{red} Configurational Integral} (3N\text{-dimensional})}
+	    \end{equation}
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Cluster Expansion</span>:
+	    J.Chem.Phys. <strong>9</strong>,2(1941),
+	    J.Mol.Liq <strong>224</strong>,694(2016),
+	    JOM <strong>72</strong>,2226(2021),
+	    Front.Chem. <strong>8</strong>,757(2020)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Nest Sampling</span>:
+	    J.Phys.Chem.B <strong>114</strong>,10502(2010), Phys.Rev.B <strong>93</strong>,174108(2016),
+	    Phys.Rev.Lett. <strong>120</strong>,250601(2018), Nature Rev. Methods Primer <strong>2</strong>,39(2022)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Advanced Monte-Carlo</span>:
+	    Phys.Rev.Lett. <strong>86</strong>,2050(2001),
+	    Annu.Rev.Chem.Biomol.Eng <strong>3</strong>,369(2012),
+	    Wires Comput.Mol.Sci. <strong>4</strong>,71(2013),
+	    J.Chem.Theory Comput. <strong>10</strong>,2623(2014)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Meta-Dynamics</span>:
+	    PNAS <strong>99</strong>,12562(2002),
+	    Rep.Prog.Phys. <strong>71</strong>,126601(2008),
+	    Annu.Rev.Phys.Chem. <strong>67</strong>,67(2016),
+	    J.Phys.Chem.Lett. <strong>9</strong>,2776(2018)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Quasiharmonic Phonon Model</span>:
+	    Prog.Mater.Sci. <strong>55</strong>,247(2010),
+	    Rev.Mod.Phys. <strong>84</strong>,975(2012),
+	    Rev.Mod.Phys. <strong>73</strong>,515(2001),
+	    Rev.Mod.Phys. <strong>74</strong>,11(2002)
+	</p>
+	<p class="ref">
+	    <span style="color: yellow">Semi-Empirical EOS</span>:
+	    J.Phys.:Condens.Matter <strong>8</strong>,67(1996),
+	    Rep.Prog.Phys. <strong>68</strong>,341(2005),
+	    High Press.Res. <strong>16</strong>,81(1998),
+	    Z.Kristallogr. <strong>216</strong>,473(2001)
+	</p>
+    </div>
+</div>
+#+end_export
+* 
+  #+begin_export html
+  <img class="logo2" src="../pics/FDU-log.png"/>
+  <img class="logo-imp2" src="../pics/imp-logo.png"/>
+  <div class="ti_font" style="color: cyan">DIA to Configurational Integral</div>
+  <div class="r-stack">
+      <!-- <div class="container_3 fragment current-visible">
+	   <p class="text_set3_1">
+	   \begin{equation}
+	   \mathcal{Q}=\mathcal{Q}_{BCC}+\mathcal{Q}_{FCC}+\mathcal{Q}_{HCP}+\mathcal{Q}_{solid}+\mathcal{Q}_{liquid}+\mathcal{Q}_{gas}+\ldots
+	   \end{equation}
+	   $$\Downarrow$$
+	   $$\mathcal{Q}_{s1}(\mathbf{q}^{N}, V, T, P)\quad {\color{red} ? (>, <, =)}\quad  \mathcal{Q}_{s2}(\mathbf{q}^{N}, V, T, P)$$
+	   </p>
+	   </div> -->
+
+      <div class="page2_img fragment current-visible">
+	  <p class="page2_img_title ti_font", style="color: red">
+	      Reinterpretation of N-dimensional Integral:
+	  </p>
+	  <div class="page2_img_pic1">
+	      <img src="../pics/int1d.png" height="320" width="300"/>
+	      <p class="mathfont3">$$I_{1D}\rightarrow\text{Effective Length}$$</p>
+	  </div>
+	  <div class="page2_img_pic2">
+	      <img src="../pics/int2d.png" height="320" width="300"/>
+	      <p class="mathfont3">$$I_{2D}\rightarrow\text{Effective Area}$$</p>
+	  </div>
+	  <p class="page2_img_text ti_font1", style="color:red">
+	      \begin{equation}
+	      I_{ND}\longrightarrow N\text{-Dimensional  Effective  Volume}
+	      \end{equation}
+	  </p>
+      </div>
+      <div class="page2_anim fragment current-visible">
+	  <p class="page2_anim_text page2_math">
+	      \begin{eqnarray}
+	      \mathcal Q&=&\int dq^{3N}\exp[-\beta U(q^{3N})], \\
+	      \textcolor{red}{U'(q'^{3N})}&\textcolor{red}{=}&\textcolor{red}{U(q^{3N})-U_0},\quad \textcolor{red}{q'_i=q_i-q_0},\\
+	      \mathcal{Q}&=&e^{-\beta U_0}\int dq'^{3N}\exp[-\beta U'(q'^{3N})]=e^{-\beta U_0}\mathcal{Q}'\\
+	      \mathcal{Q}'&=&\prod_{i=1}^{3N}\mathcal{L}_i, \quad\mathcal{L}_i=\int e^{-\beta U'(0\ldots q'_i\ldots 0)}dq'_i
+	      \end{eqnarray}
+	      $$\Downarrow$$
+	      \begin{equation}
+	      \mathcal Q=e^{-\beta U_0}{\mathcal{L}}^{3N} ({\color{red}3N\textbf{-Dimension}\rightarrow 1\textbf{-Dimension}})
+	      \end{equation}
+	  </p>
+	  <img class="page2_anim1" src="../pics/BCC-move-V.gif" height="280" width="350"/>
+	  <img class="page2_anim2" src="../pics/BCC-potential.gif" height="280" width="350"/>
+      </div>
+  </div>
+  <p class="page2_ref">
+      J.Phys.Condens.Matter <strong>33</strong>,115901(2021), 
+      ibid., <strong>33</strong>,085901(2020),
+      Nanomaterials <strong>9</strong>,978(2019),
+      Entropy <strong>21</strong>,1050(2019)
+  </p>
+  #+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA to Vanadium</div>
+<br>
+<div class="r-stack">
+    <div class="page3_v fragment current-visible">
+	<div class="page3_v1">
+	    <img src="../pics/v-2007-1.png" height="350" width="700"/>
+	    <p class="page2_math">$$\color{red} P_c\sim 60  GPa$$</p>
+	    <p class="ref">
+		Phys.Rev.Lett. <strong>98</strong>,085502 (2007)</br>
+		J.Phys.:Condens.Matter <strong>18</strong>,5079(2006),</br>
+		J.Phys.:Condens.Matter <strong>14</strong>,10869(2002)
+	    </p>
+	</div>
+	<div class="page3_v2">
+	    <img src="../pics/v-phonon.png" height="350" width="300"/>
+	    <p class="page2_math">$$\color{red} P_c\sim 34  GPa$$</p>
+	    <p class="ref">
+		Sci.Rep <strong>6</strong>,31887(2016)</br>
+		Phys.Rev.B <strong>83</strong>,054101(2011)
+	    </p>
+	</div>
+	<div class="page3_v3">
+	    <img src="../pics/v-theo.png" height="350" width="480"/>
+	    <p class="ref">
+		$$\color{red}{BCC\stackrel{\sim 60 GPa}{\longrightarrow} RH1(\Delta\alpha\sim 1\%)}{\stackrel{\sim 120 GPa}{\longrightarrow} RH2(\Delta\alpha\sim -1\%)\stackrel{\sim 280 GPa}{\longrightarrow} BCC}$$
+		Sci. Rep. <strong>6</strong>,32419(2016), PNAS <strong>104</strong>,16428(2007),</br>
+		Phys.Rev.B <strong>75</strong>,180101(2007), J.Phys.:Condens.Matter <strong>20</strong>,275218(2008), </br>
+		J.Chem.Phys.<strong>152</strong>024118(2020)
+	    </p>
+	</div>
+    </div>
+    <div class="page3_newexp fragment current-visible">
+	<div class="page3_jap">
+	    <img src="../pics/v-jap.png" height="380" width="340"/>
+	    <div class="list">
+		<ul>
+		    <li>BCC is stable up ~250 GPa</li>
+		    <li>only RH2 phase exist above 250 GPa</li>
+		</ul>
+	    </div>
+	    <p class="ref">
+		Akahama et al. J.Appl.Phys.<strong>129</strong>,025901(2021)
+	    </p>
+	</div>
+	<div class="page3_prb">
+	    <img src="../pics/v-prb-2021.png" height="380" width="340"/>
+	    <div class="list">
+		<ul>
+		    <li> |Δα| &#8810 1%</li>
+		    <li>tansition sequence BCC→RH2→RH1</li>
+		</ul>
+	    </div>
+	    <p class="ref">
+		Stevenson et al. Phys.Rev.B  <strong>103</strong>,134103(2021)
+	    </p>
+	</div>
+    </div>
+    <div class="page3_dia fragment current-visible">
+	<div class="page3_dia1">
+	    <img src="../pics/v-dia1.png" height="380" width="450"/>
+	</div>
+	<div class="page3_dia2">
+	    <img src="../pics/v-dia2.png" height="380" width="450"/>
+	</div>
+	<div class="page3_dia3">
+	    <img src="../pics/v-dia3.png" height="380" width="450"/>
+	</div>
+	<div class="page3_diaref">
+	    <div class="list" style="color: cyan">
+		<ul>
+		    <li>Confirmations of EOS by Akahama et al.(2021)</li>
+		    <li>Confirmations of transition sequence and RH structures by Stevenson et al.(2021) </li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+	        Ning et al. J.Phys.:Condens.Matter  <strong>34</strong>,425404(2022)
+	    </p>
+	</div>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA to Aluminium</div>
+<br>
+<div class="r-stack">
+    <div class="page4_al fragment current-visible">
+	<div class="page4_al1">
+	    <img src="../pics/al-prl.png" height="350" width="320"/>
+	</div>
+	<div class="page4_al2">
+	    <img src="../pics/al-pt.png" height="350" width="400"/>
+	</div>
+	<div class="page4_al3">
+	    <img src="../pics/al-dia-table.png" height="350" width="400"/>
+	</div>
+	<div class="page4_alref">
+	    <ul class="list" style="color: red">
+	    <li>The inconsistences of transition pressures among experiments and computations?</li>
+	    </ul>
+	    <p class="page3_ref">
+	        Phys.Rev.Lett. <strong>96</strong>,045505(2006), Nat.Communications <strong>9</strong>,2913(2018),</br>
+		Phys.Rev.Lett. <strong>119</strong>,175702(2017), C.R.Geoscience <strong>351</strong>,243(2019)
+	    </p>
+	</div>
+    </div>
+    <div class="page4_al fragment current-visible">
+	<div class="page4_al1">
+	    <img src="../pics/al-dia-0k.png" height="350" width="450"/>
+	</div>
+	<div class="page4_al2">
+	    <img src="../pics/al-dia-300k.png" height="350" width="450"/>
+	</div>
+	<div class="page4_al3">
+	    <img src="../pics/al-dia-pv.png" height="350" width="450"/>
+	</div>
+	<div class="page4_alref">
+	    <div class="list" style="color: cyan">
+		<ul>
+		    <li>Sole confirmation of experimental results by Dawaele et al.(2018)</li>
+		    <li>Thermal contributions to phase transitions at room temperature</li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+		Ning et al. arXiv:<strong>2204.07318</strong>(2022)
+	    </p>
+	</div>
+    </div>
+</div>
+#+end_export
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA to Zirconium</div>
+<br>
+<div class="r-stack">
+    <div class="page5_zr fragment current-visible">
+	<div class="page5_zr1">
+	    <img src="../pics/zr-prb-2018.png" height="370" width="380"/>
+	</div>
+	<div class="page5_zr2">
+	    <img src="../pics/zr-prb-2020.png" height="370" width="400"/>
+	</div>
+	<div class="page5_zr3">
+	    <img src="../pics/zr-dia-table.png" height="370" width="400"/>
+	</div>
+	<div class="page5_zrref">
+	    <div class="list" style="color: red">
+		<ul>
+		    <li>Isostructural phase transition in β-phase?</li>
+		    <li> Theoretical transition pressure of α→ω much smaller than experimental 5-15 GPa?</li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+	        J.Phys.Soc.Japan <strong>60</strong>,3221(2006), Phys.Rev.B <strong>98</strong>,220101(R)(2018),</br>
+		Phys.Rev.B <strong>102</strong>,184105(2020), J.Phys.:Condens.Matter <strong>32</strong>,12LT02(2019),</br>
+		High Press.Res. <strong>41</strong>,247(2021)
+	    </p>
+	</div>
+    </div>
+    <div class="page5_zr fragment current-visible">
+	<div class="page5_zr1">
+	    <img src="../pics/zr-alpha.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zr2">
+	    <img src="../pics/zr-beta.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zr3">
+	    <img src="../pics/zr-dia-pv.png" height="350" width="450"/>
+	</div>
+	<div class="page5_zrref">
+	    <div class="list" style="color: cyan">
+		<ul>
+		    <li>Confirmation of EOSs by latest experiments</li>
+		    <li>No isostructural phase transition in β-phase </li>
+		    <li>Transition pressure of α→ω: 6.93 GPa</li>
+		</ul>
+	    </div>
+	    <p class="page3_ref">
+		NBY, J.Phys.:Condens.Matter<strong>34</strong>,505402(2022)
+	    </p>
+	</div>
+    </div>
+</div>
+#+end_export
+
+* 
+#+begin_export html
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Conclusion Remarks</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>Universatily of DIA: Bulk, low-dimensional, nano materials and large molecules</li>
+	<li>Ultrahigh efficieincy and precision of DIA</li>
+	<li>Extreme-condition physics</li>
+	<li>Partition function computed in combinations of first-principle calculations</li>
+    </ul>
+</div>
+<br>
+<br>
+<div class="ti_font" style="color: cyan">Acknowledgement</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>Prof. Tsu-Chien Weng (翁祖谦, ShanghaiTech University)</li>
+    </ul>
+</div>
+
+#+end_export
+* 
+  #+begin_export html
+  <!-- <img class="logo2" src="../pics/FDU-log.png"/>
+       <img class="logo-imp2" src="../pics/imp-logo.png"/> -->
+  <h2, class="title"> Thanks for your attentions and comments are <em>MOST</em> welcome!</h2>
+  #+end_export
+* 
+#+begin_export html
+<div class="ti_font" style="color: cyan">Appendix: Mathematics Proof of DIA (2D Integral)</div>
+<br>
+<p class="appdmath">
+    \begin{eqnarray}
+    &&I_{2D}=\int_0^{a_1}dx\int_0^{a_2}dye^{-U(x,y)},\\
+    &&X'(x)=\int_0^xe^{-U(\xi,0)}d\xi, Y'(y)=\int_0^ye^{-U(0,\xi)}d\xi.\\
+    &&X'(0)=0, Y'(0)=0\\
+    &&a'_1=\int_0^{a_1}e^{-U(\xi,0)}d\xi,a'_2=\int_0^{a_2}e^{-U(0,\xi)}d\xi\\
+    &&I_{2D}=\int_0^{a'_1}dX'\int_0^{a'_2}dY'e^{-F(X',Y')}.\\
+    &&\text{If U(x,y) has a minimum at the origin (x=0, y=0) and U(0,0)=0},\\
+    &&F(0,0)=0,\frac{\partial F}{\partial X'}{\Big |}_0=\frac{\partial F}{\partial Y'}{\Big |}_0=0\\
+    &&I_{2D}\simeq a'_1a'_2.
+    \end{eqnarray}
+</p>
+#+end_export
+* 
+#+reveal_html: <div class="ti_font" style="color: cyan">Temperature Effects I</div>
+#+reveal_html: <br>
+#+reveal_html: <img src="../pics/al-thermal.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/zr-thermal.png" height="350" width="450"/>
+
+* 
+#+reveal_html: <div class="ti_font" style="color: cyan">Temperature Effects II</div>
+#+reveal_html: <br>
+#+reveal_html: <img src="../pics/au-isothermal.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/hugoniot.png" height="350" width="450"/>
+#+reveal_html: <img src="../pics/w.png" height="350" width="450"/>
+
+* 
+$\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}$, $\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}$, 

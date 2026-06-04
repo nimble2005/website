@@ -1,0 +1,55 @@
+from matplotlib import pyplot as plt
+from matplotlib import animation
+import numpy as np
+import sys
+sys.path.append("/home/nby/study/NBY-Lib/")
+from nbyplot import myplot, myfig_setup, nbymarker
+
+
+def data_gen():
+    dir_data = "/home/nby/study/vanadium-new/SUST/BCC/curvedata/"
+    file_ep = dir_data + "energy_sv_" + "1.00_mag.dat"
+    ep = np.loadtxt(file_ep)
+    ep0 = ep[0]
+    ep = ep - ep0
+    dis = np.linspace(0, 0.5, 11)
+    return dis, ep
+
+
+def plot_frame(data):
+    xdata, ydata = data
+    line.set_data(xdata, ydata)
+    return line,
+
+
+def iter_item(ax, datax, datay, num):
+    for i in range(0, num):
+        yield datax[0:i], datay[0:i]
+
+
+def main():
+    # myplot(ax, [], [],
+    #        {"marker": "*", "linestyle": ":",
+    #         "color": "red", "label": "Potential Curve"})
+    myfig_setup(ax, "Potential Energy Curve", r"r $({\AA})$", r"$U'$ (eV)", 15)
+    ax.set_xlim(-0.05, 0.55)
+    ax.set_ylim(-0.05, 1)
+    # line, = plot_frame(ax, datax, datay, 0)
+    ani = animation.FuncAnimation(fig, plot_frame,
+                                  iter_item(ax, datax, datay, 12),
+                                  interval=500, blit=False)
+    # ani.save("./BCC-potential.gif", dpi=300, fps=2)
+    ani.save("/home/nby/study/NBY-Report/FDU-Postdoc/Mid-Report/img/BCC-potential.gif",
+             dpi=300, fps=2)
+    # plt.show()
+
+
+datax, datay = data_gen()
+fig, ax = plt.subplots()
+line, = myplot(ax, [], [],
+               {"marker": "*", "linestyle": ":",
+                "color": "red"})
+
+
+if __name__ == '__main__':
+    main()

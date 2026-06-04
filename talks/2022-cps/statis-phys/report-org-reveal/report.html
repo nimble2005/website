@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(宁博元)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="file:///Users/nby/.emacs.d/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="file:///Users/nby/.emacs.d/reveal.js/dist/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="nby-reveal.css"/>
+<script type="text/javascript" src="/Users/nby/.emacs.d/MathJax-master/es5/tex-chtml-full.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background-size="1600px 900px" data-background-opacity="0.03"><img class="logo" src="../pics/FDU-log.png"/>
+<img class="logo-imp" src="../pics/imp-logo.png"/>
+<h1, class="title">Solution to The Partition Function of Condensed Matters</h1><br>
+<h2, class="t2">--- Direct Integral Approach</h2>
+<br>
+<br>
+<h2, class="t3">Bo-Yuan Ning (宁博元)<sup>&#8224</sup>, Xi-Jing Ning (宁西京)<sup>&#8225</sup></h2><br>
+<h4, class="t4">Institute of Modern Physics, Fudan University</h4><br>
+<h4, class="t4">Department of Nuclear Science and Technology, Fudan University</h4><br>
+<h5, class="t5"><sup>&#8224</sup>byning@fudan.edu.cn, <sup>&#8225</sup>xjning@fudan.edu.cn</h5><br>
+<br>
+<h6, class="t5">CPS2022 &#8729 Shenzhen</h5><br>
+</section>
+<section>
+<section id="slide-org37cb480">
+<h2 id="org37cb480"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font", style="color: cyan">Question: The 3N-Dimensional Integral in Partition Function of Condensed Matters?</div>
+<!-- <div class="r-stack">
+     <div class="fragment current-visible"> -->
+<p class="page1mathfont">
+    \begin{eqnarray}
+    \mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
+    &=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)]
+    \end{eqnarray}
+    \begin{equation}
+    \mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{\color{red} Configurational Integral} (3N\text{-dimensional})}
+    \end{equation}
+</p>
+<p class="ref">
+    <span style="color: yellow">Cluster Expansion</span>:
+    J.Chem.Phys. <strong>9</strong>,2(1941),
+    J.Mol.Liq <strong>224</strong>,694(2016),
+    JOM <strong>72</strong>,2226(2021),
+    Front.Chem. <strong>8</strong>,757(2020)
+</p>
+<p class="ref">
+    <span style="color: yellow">Nest Sampling</span>:
+    J.Phys.Chem.B <strong>114</strong>,10502(2010), Phys.Rev.B <strong>93</strong>,174108(2016),
+    Phys.Rev.Lett. <strong>120</strong>,250601(2018), Nature Rev. Methods Primer <strong>2</strong>,39(2022)
+</p>
+<p class="ref">
+    <span style="color: yellow">Advanced Monte-Carlo</span>:
+    Phys.Rev.Lett. <strong>86</strong>,2050(2001),
+    Annu.Rev.Chem.Biomol.Eng <strong>3</strong>,369(2012),
+    Wires Comput.Mol.Sci. <strong>4</strong>,71(2013),
+    J.Chem.Theory Comput. <strong>10</strong>,2623(2014)
+</p>
+<p class="ref">
+    <span style="color: yellow">Meta-Dynamics</span>:
+    PNAS <strong>99</strong>,12562(2002),
+    Rep.Prog.Phys. <strong>71</strong>,126601(2008),
+    Annu.Rev.Phys.Chem. <strong>67</strong>,159(2016),
+    J.Phys.Chem.Lett. <strong>9</strong>,2776(2018)
+</p>
+<p class="ref">
+    <span style="color: yellow">Quasiharmonic Phonon Model</span>:
+    Prog.Mater.Sci. <strong>55</strong>,247(2010),
+    Rev.Mod.Phys. <strong>84</strong>,975(2012),
+    Rev.Mod.Phys. <strong>73</strong>,515(2001),
+    Rev.Mod.Phys. <strong>74</strong>,11(2002)
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org5b51b34">
+<h2 id="org5b51b34"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">DIA to Configurational Integral: Reinterpretation of High-Dimensional Integral</div>
+<div class="r-stack">
+    <div class="page2_img fragment current-visible">
+	<!-- <p class="page2_img_title ti_font", style="color: red">
+	     :
+	     </p> -->
+	<div class="page2_img_pic1">
+	    <img src="../pics/int1d.png" height="350" width="320"/>
+	    <p class="mathfont3">$$I_{1D}\rightarrow\text{Effective Length}$$</p>
+	</div>
+	<div class="page2_img_pic2">
+	    <img src="../pics/int2d.png" height="350" width="320"/>
+	    <p class="mathfont3">$$I_{2D}\rightarrow\text{Effective Area}$$</p>
+	</div>
+	<p class="page2_img_text ti_font1", style="color:red">
+	    \begin{equation}
+	    I_{ND}\longrightarrow N\text{-Dimensional  Effective  Volume}
+	    \end{equation}
+	</p>
+    </div>
+    <div class="page2_anim fragment current-visible">
+	<p class="page2_anim_text page2_math">
+	    \begin{eqnarray}
+	    \mathcal Q&=&\int dq^{3N}\exp[-\beta U(q^{3N})], \\
+	    \textcolor{red}{U'(q'^{3N})}&\textcolor{red}{=}&\textcolor{red}{U(q^{3N})-U_0},\quad \textcolor{red}{q'_i=q_i-q_0},\\
+	    \mathcal{Q}&=&e^{-\beta U_0}\int dq'^{3N}\exp[-\beta U'(q'^{3N})]=e^{-\beta U_0}\mathcal{Q}'\\
+	    \mathcal{Q}'&\simeq&\prod_{i=1}^{3N}\mathcal{L}_i, \\
+	    \quad\mathcal{L}_i&=&\int e^{-\beta U'(0\ldots q'_i\ldots 0)}dq'_i
+	    \end{eqnarray}
+	    $$\Downarrow$$
+	    \begin{equation}
+	    {\color{red}3N\text{-Dimensional CI}\rightarrow 3N \text{ One-Dimensional Integrals}}
+	    \end{equation}
+	</p>
+	<div class="page2_ci">
+	<img src="../pics/ciphase.png" height="480" width="400"/>
+	<p class="page2_math">Shrink the 3N-Dimensional effective volume</p>
+	</div>
+    </div>
+</div>
+<p class="page2_ref">
+    J.Phys.Condens.Matter <strong>33</strong>,115901(2021) 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc017026">
+<h2 id="orgc017026"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">Implementation of DIA</div>
+<br>
+<div class="page_impl">
+    <p class="page_impl1 page_implmath">
+	\begin{eqnarray}
+	&\mathcal Q=e^{-\beta U_0}\mathcal L^{3N}\\
+	&\text{ (BCC, FCC...)}\\
+	\\
+	&\mathcal Q=e^{-\beta U_0}\left(\mathcal L_x\mathcal L_y\mathcal L_z\right)^N\\
+	&\text{ (HCP...)}\\
+	\\
+	&\mathcal Q=e^{-\beta U_0}\prod_{I=1}^{M}\left(\mathcal L_{I_{x}}\mathcal L_{I_{y}}\mathcal L_{I_{z}}\right)^{N_I}\\
+	&\text{(molecules, clusters, asymmetric structures...)}
+	\end{eqnarray}
+    </p>
+    <div class="page_impl2">
+	<img class="page2_anim1" src="../pics/BCC-move-V.gif" height="250" width="320"/></br>
+	<img class="page2_anim2" src="../pics/BCC-potential.gif" height="250" width="320"/>
+	<!-- <p class="page_implmath2">Potential-Energy Curve U'</p> -->
+    </div>
+    <div class="page_impl3">
+	<p class="page2_ref">
+	    J.Phys.Condens.Matter <strong>33</strong>,115901(2021)
+	</p>
+    </div>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org00de364">
+<h2 id="org00de364"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">Examination of DIA</div>
+<br>
+<div class="page_exam">
+    <div class="page_exam1">
+	<img src="../pics/cusol.png" height="350" width="400"/>
+	<p class="page_examref">4000-atom crystalline Copper</p>
+    </div>
+    <div class="page_exam2">
+	<img src="../pics/culiq.png" height="350" width="400"/>
+	<p class="page_examref">4000-atom amorphous Copper</p>
+    </div>
+    <div class="page_exam3">
+	<img src="../pics/argon.png" height="350" width="400"/>
+	<p class="page_examref">4000-atom crystalline Argon</p>
+    </div>
+    <div class="page_exam4 list">
+	<div style="color: cyan">
+	    <ul>
+		<li>Exclustion of potential influences</li>
+		<li>Deviations < 1%</li>
+	    </ul>
+	</div>
+	<p class="refnew">
+	    J.Phys.Condens.Matter <strong>33</strong>,115901(2021),
+	    Entropy <strong>21</strong>_1050(2019)
+	</p>
+    </div>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org23ab328">
+<h2 id="org23ab328"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_fontnew" style="color: cyan">Comparisons of DIA with Other Methods</div>
+<br>
+<div class="page_exam">
+    <div class="page_exam1">
+	<img src="../pics/ns1.png" height="350" width="400"/>
+	<p class="page_examref">DIA v.s. NS v.s. MD</p>
+    </div>
+    <div class="page_exam2">
+	<img src="../pics/ns2.png" height="350" width="400"/>
+	<p class="page_examref">DIA v.s. NS v.s. Experiment</p>
+    </div>
+    <div class="page_exam3">
+	<img src="../pics/qha1.png" height="350" width="400"/>
+	<p class="page_examref">DIA v.s. Phonon v.s. Experiment</p>
+    </div>
+    <div class="page_exam4 list">
+	<div style="color: cyan">
+	    <ul>
+		<li>Efficieincy: at least 4-order faster</li>
+		<li>Precision: ~ 1-order </li>
+	    </ul>
+	</div>
+	<p class="refnew">
+	    Entropy <strong>21</strong>,1050(2019),
+	    J.Phys.Condens.Matter <strong>33</strong>,085901(2020)
+	</p>
+    </div>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org97d9bd0">
+<h2 id="org97d9bd0"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA: Molecules and Nanomaterials</div>
+<br>
+<div class="page_mol">
+    <div class="page_c60">
+	<img src="../pics/c60.png" height="380" width="570"/>
+	<p class="refnew">
+	    Survival probability of C<sub>60</sub> isomers</br>
+	    J.Phys.Condens.Matter <strong>33</strong>,115901(2021)
+	</p>
+    </div>
+    <div class="page_2d">
+	<img src="../pics/nano.JPEG" height="380" width="570"/>
+	<p class="refnew">
+	    Optimal growth condition of 2D materials</br>
+	    Nanomaterials <strong>9</strong>,978(2019)
+	</p>
+    </div>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgb977229">
+<h2 id="orgb977229"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Applications of DIA: Phase Stability and EOS of Bulk Materials</div>
+<br>
+<div class="r-stack">
+    <div class="page_bulk fragment current-visible">
+	<div class="page_bulk1">
+	    <img src="../pics/zr-dia-pv.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		Phase Transitions of Zirconium</br>
+		J.Phys.:Condens.Matter <strong>34</strong>,505402(2022)
+	    </p>
+	</div>
+	<div class="page_bulk2">
+	    <img src="../pics/v-dia1.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		Phase Transitions of Vanadium</br>
+		J.Phys.Condens.Matter <strong>34</strong>,425404(2022)
+	    </p>
+	</div>
+	<div class="page_bulk3">
+	    <img src="../pics/al-dia-pv.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		Phase Transitions of Aluminium</br>
+		arXiv:<strong>2204.07318</strong>(2022)
+	    </p>
+	</div>
+    </div>
+    <div class="page_bulk fragment current-visible">
+	<div class="page_bulk1">
+	    <img src="../pics/w.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		EOS of Tungsten</br>
+		arXiv:<strong>2210.16736</strong>(2022)
+	    </p>
+	</div>
+	<div class="page_bulk2">
+	    <img src="../pics/hugoniot.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		Shock Compression of Gold</br>
+		(unpublished)
+	    </p>
+	</div>
+	<div class="page_bulk3">
+	    <img src="../pics/tbpv.png" height="340" width="420"/></br>
+	    <p class="refnew">
+		EOS of Copper</br>
+		J.Phys.Condens.Matter <strong>33</strong>,115901(2021)
+	    </p>
+	</div>
+    </div>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgabff546">
+<h2 id="orgabff546"></h2>
+<img class="logo2" src="../pics/FDU-log.png"/>
+<img class="logo-imp2" src="../pics/imp-logo.png"/>
+<div class="ti_font" style="color: cyan">Conclusion Remarks</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>Universatily of DIA: Molecules, Low-Dimensional and Bulk Materials</li>
+	<li>Ultrahigh Efficieincy and Precision of DIA</li>
+	<li>Partition Function Computed in Combinations of First-Principle Calculations</li>
+    </ul>
+</div>
+<br>
+<br>
+<div class="ti_font" style="color: cyan">Acknowledgement</div>
+<br>
+<div class="conclulist">
+    <ul>
+	<li>Prof. Tsu-Chien Weng (翁祖谦, ShanghaiTech University)</li>
+    </ul>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org32cf259">
+<h2 id="org32cf259"></h2>
+<!-- <img class="logo2" src="../pics/FDU-log.png"/>
+     <img class="logo-imp2" src="../pics/imp-logo.png"/> -->
+<h2, class="title"> Thanks for your attentions and comments are <em>MOST</em> welcome!</h2>
+</section>
+</section>
+<section>
+<section id="slide-orga8dbdc5">
+<h2 id="orga8dbdc5"></h2>
+<div class="ti_font" style="color: cyan">Appendix: Mathematics Proof of DIA (2D Integral)</div>
+<br>
+<p class="appdmath">
+    \begin{eqnarray}
+    &&I_{2D}=\int_0^{a_1}dx\int_0^{a_2}dye^{-U(x,y)},\\
+    &&X'(x)=\int_0^xe^{-U(\xi,0)}d\xi, Y'(y)=\int_0^ye^{-U(0,\xi)}d\xi.\\
+    &&X'(0)=0, Y'(0)=0\\
+    &&a'_1=\int_0^{a_1}e^{-U(\xi,0)}d\xi,a'_2=\int_0^{a_2}e^{-U(0,\xi)}d\xi\\
+    &&I_{2D}=\int_0^{a'_1}dX'\int_0^{a'_2}dY'e^{-F(X',Y')}.\\
+    &&\text{If U(x,y) has a minimum at the origin (x=0, y=0) and U(0,0)=0},\\
+    &&F(0,0)=0,\frac{\partial F}{\partial X'}{\Big |}_0=\frac{\partial F}{\partial Y'}{\Big |}_0=0\\
+    &&I_{2D}\simeq a'_1a'_2.
+    \end{eqnarray}
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org5b73e18">
+<h2 id="org5b73e18"></h2>
+<p>
+\(\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}\), \(\mathcal Q=\frac{1}{\beta}\frac{\ln\mathcal{Z}}{\ln V}\), 
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="file:///Users/nby/.emacs.d/reveal.js/dist/reveal.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="file:///Users/nby/.emacs.d/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+margin: 0.05, transition: "cube", slideNumber: "h.v", width: 1600
+});
+
+</script>
+</body>
+</html>
