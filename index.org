@@ -48,9 +48,10 @@ You may find my academic experience in my [[file:CV/byning_cv.pdf][Curriculum Vi
 \mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{Configurational Integral} (3N\text{-dimensional})}
 \end{equation*}
 * News
-  - I gave two talks in 2022 CPS Annual Meeting @ SUSTech, Shenzhen, China (11.18-11.20.2022).
-    - [[file:talks/2022-cps/comput-phys/report/report.html][A new method to predict phase transition and EOS of solid materials]] (Computational Physics Section, slides in Chinese)
-    - [[file:takls/2022-cps/statis-phys/report/report.html][A new method to solve the partition function of condensed-matter systems---DIA]] (Statistical Physics Section, slides in Chinese)
+  - Presentation in 2022 CPS Annual Meeting @ SUSTech, Shenzhen, China (11.18-11.20.2022).
+    - [[file:talks/2022-comput-physic/report/report.html][A new method to predict phase transition and EOS of solid materials]]
+#    - [[file:talks/2022-cps/comput-phys/report/report.html][A new method to predict phase transition and EOS of solid materials]] (Computational Physics Section, slides in Chinese)
+    # - [[file:takls/2022-cps/statis-phys/report/report.html][A new method to solve the partition function of condensed-matter systems---DIA]] (Statistical Physics Section, slides in Chinese)
 
 
 * Publication List
