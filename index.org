@@ -6,15 +6,15 @@
 #+HTML_HEAD: <style> #content{max-width:1300px;}</style>
 * Who am I and what I do?
 
-I am a physics lover and working as a faculty scientist at /Shanghai Institute of Applied Physics/ (SINAP), Chinese Academy of Sciences.
-The big picture here is to build up the Thorium-based molten salt reactor (TMSR), which is one of state-of-the-art 4th-generation nuclear fission reactors.
-
+I am a physics lover and at present working as a research faculty at /Shanghai Institute of Applied Physics/ (SINAP), Chinese Academy of Sciences.
+The big picture of the SINAP is to build up the Thorium-based molten salt reactor (TMSR), which is one of state-of-the-art 4th-generation nuclear fission reactors.
 
 While I do quite enjoy carrying out experimental works,
 my main research field is theoretical condensed-matter physics
 and at present I am focusing on applying statistical mechanics approaches to investigate the
 thermodynamic and mechanical properties of
-realistic materials under high temperature-pressure and high-irradiation extreme conditions.
+realistic materials under high temperature-pressure and neutron irradiation extreme conditions,
+so as to assist the R&D of structural materials to be used in the upcoming high-power TMSR.
 
 
 You may find my academic experience in my [[file:CV/byning_cv.pdf][Curriculum Vitae]].
@@ -35,19 +35,48 @@ You may find my academic experience in my [[file:CV/byning_cv.pdf][Curriculum Vi
   #+ATTR_HTML: style float:center
   [[file:pics/mmexport1658647920627.jpg]]
   
-* Current Research Fields
-** Phase Stability of Metals/Alloys under Extreme Conditions
-** Mechanical Properties of Solids
-** Creep Rate of High-End Alloys
+* Current Research Interests and Fields
+** Development of Theoretical Approaches for Predicting Long-Term Creep Lifetime of Alloys under Extreme Conditions
+    - Single Atom Statistical Model (SASM) for Creep Constitutive Relationship
 
-# \begin{eqnarray}
-# $$\mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
-# &=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)]$$
-# \end{eqnarray}
-\begin{equation*}
-\mathcal{Q}=\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{Configurational Integral} (3N\text{-dimensional})}
-\end{equation*}
-* News
+ #+ATTR_HTML: :width 700px height 300px
+ #+ATTR_HTML: style float:center
+[[file:pics/sasm.png]]
+
+                 [[https://doi.org/10.1016/j.tramat.2026.100334][Trans.Mater.Res.2 _ 100331 (2026)]]
+
+** Free Energy/Partition Function Computations of Condensed Matters
+    - Configurational Integral: The 'Curse of Dimensionality' for equilibrium statistical mechanics over a century
+\begin{eqnarray}
+\mathcal{Z}&=&\frac{1}{N!h^{3N}}\int d\vec{\textbf{p}}^N\int d\vec{\textbf{q}}^N\exp\{-\beta[\sum_{i=1}^{N}\frac{\vec{\textbf{p}}_i^2}{2m}+U(\vec{\textbf{q}}^N)]\} \\
+&=&\frac{1}{N!}\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}N}\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \nonumber \\
+\mathcal{Q}&=&\int d\vec{\textbf{q}}^N\exp[-\beta U(\vec{\textbf{q}}^N)] \longrightarrow {\text{Configurational Integral} (3N\text{-dimensional})}
+\end{eqnarray}
+
+
+*** Direct Integral Approach (DIA) to Solve the Many-Body Partition Function
+
+
+ #+ATTR_HTML: :width 700px height 600px
+ #+ATTR_HTML: style float:center
+ [[file:pics/DIA.png]]
+
+         [[https://doi.org/10.1088/1361-648X/abd33b][J.Phys.Condens.Matter.33 _ 115901(2021)]]
+
+
+** Phase Transitions/Diagrams of Metals/Alloys under Extreme Conditions
+ #+ATTR_HTML: :width 700px height 300px
+ #+ATTR_HTML: style float:center
+ [[file:pics/phase-transition.png]]
+
+** Equations of States of Metals/Alloys under Extreme Conditions
+ #+ATTR_HTML: :width 700px height 300px
+ #+ATTR_HTML: style float:center
+[[file:pics/EOS.png]]
+
+* Presentations
+  - Presentation in 12th JaPan-China Bilateral Symposium @ Kanazawa, Japan (8.10-8.13.2025)
+    - [[file:talks/2025-japan.pdf][A non-equilibrium statistical model-based constitutive equation for predicting creep lifetime of alloys]]
   - Presentation in 2024 CMS Annual Meeting @ Guangzhou, China (7.8-7.10.2024).
     - [[file:talks/2024-cms.pdf][应用非平衡态统计力学模型预测合金材料的蠕变寿命]]
   - Presentation in 2022 CPS Annual Meeting @ SUSTech, Shenzhen, China (11.18-11.20.2022).
@@ -64,6 +93,7 @@ You may find my academic experience in my [[file:CV/byning_cv.pdf][Curriculum Vi
 	     <li>Equation of state for tungsten predicted by ensemble theory, Yue-Yue Tian, <em><strong>Bo-Yuan Ning</strong></em>, X.-D. Xiang, Hui-Fen Zhang<sup>*</sup>, Xi-Jing Ning<sup>&#8224</sup>, arXiv:<strong>2210.16736</strong>(2022).</li>
 	     </ul> -->
 	<ul> <strong>Published</strong>
+	    <li>A statistical mechanics-based irradiation creep constitutive model for the Ni-based superalloy used in molten salt reactors, <em><strong>Bo-Yuan Ning</strong></em>, Wanxia Wang, Chengbin Wang, Wei Zhang, Hefei Huang<sup>*</sup>, <em><strong>Transactions of Materials Research</strong>, 2_100334(2026)</em></li>
 	    <li>Equation of State of Rhenium Under High Temperatures and Pressures Predicted by Ensemble Theory, Yue-Yue Tian, Hui-Fen Zhang, <em><strong>Bo-Yuan Ning<sup>*</sup></strong></em>, Xi-Jing Ning, <em><strong>International Journal of Thermophysics</strong>, 46_110(2025)</em></li>
 	    <li>First–principles study on embrittlement behavior of gadolinium-doped nickel grain boundaries, Fei-Fei Zhang, A-Li Wen, <em><strong>Bo-Yuan Ning</strong></em>, Dong-Bo Xiong, Xue Hai, Chun-Yan Zou, Jin-Gen Chen, Cui-Lan Ren<sup>*</sup>, <em><strong>Journal of Applied Physics</strong>, 138_125106(2025)</em></li>
 	    <li>Theoretical Predictions for the Equation of State of Metal Nickel at Extreme Conditions, Si-Han Wu, Yue-Yue Tian, <em><strong>Bo-Yuan Ning</strong></em>, Hui-Fen Zhang<sup>*</sup>, Xi-Jing Ning<sup>*</sup>, <em><strong>Metals</strong>, 15_582(2025)</em></li>
