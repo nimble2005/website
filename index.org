@@ -18,6 +18,8 @@ so as to assist the R&D of structural materials to be used in the upcoming high-
 
 
 You may find my academic experience in my [[file:CV/byning_cv.pdf][Curriculum Vitae]].
+My Ph.D thesis "Quantum Control on Spin-1 Bose-Einstein Condensation" (in Chinese) can be found [[file:CV/phd_thesis.pdf][here]].
+My postdoc report "A New Theoretical Method to Predict Solid Phase Transitions under Extreme Conditions：DIA" can be found [[file:CV/postdoc_report.pdf][here]].
 
 
 @@html:
