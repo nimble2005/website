@@ -1,0 +1,35 @@
+# -*- mode: org; -*-
+
+#+SETUPFILE: html-theme-readtheorg.setup
+
+#+HTML_HEAD: <script type="text/javascript">
+#+HTML_HEAD: (function () {
+#+HTML_HEAD:   var msg = "[Org export] Deprecated SETUPFILE: theme-readtheorg.setup. Update to: html-theme-readtheorg.setup";
+#+HTML_HEAD:   if (typeof console !== "undefined" && console.warn) console.warn(msg);
+#+HTML_HEAD:
+#+HTML_HEAD:   function addBanner() {
+#+HTML_HEAD:     var d = document;
+#+HTML_HEAD:     if (!d || !d.body) return;
+#+HTML_HEAD:     if (d.getElementById("org-setupfile-deprecated-banner")) return;
+#+HTML_HEAD:
+#+HTML_HEAD:     var div = d.createElement("div");
+#+HTML_HEAD:     div.id = "org-setupfile-deprecated-banner";
+#+HTML_HEAD:     div.setAttribute("style",
+#+HTML_HEAD:       "border:2px solid #d33; padding:0.8em; margin:0.8em 0; background:#fee; color:#600;" +
+#+HTML_HEAD:       "font-family:sans-serif; font-size:90%;"
+#+HTML_HEAD:     );
+#+HTML_HEAD:     div.innerHTML =
+#+HTML_HEAD:       "<strong>Deprecated:</strong> <code>theme-readtheorg.setup</code> has been renamed to " +
+#+HTML_HEAD:       "<code>html-theme-readtheorg.setup</code>. " +
+#+HTML_HEAD:       "Please update your Org file.";
+#+HTML_HEAD:
+#+HTML_HEAD:     d.body.insertBefore(div, d.body.firstChild);
+#+HTML_HEAD:   }
+#+HTML_HEAD:
+#+HTML_HEAD:   if (document.readyState === "loading") {
+#+HTML_HEAD:     document.addEventListener("DOMContentLoaded", addBanner);
+#+HTML_HEAD:   } else {
+#+HTML_HEAD:     addBanner();
+#+HTML_HEAD:   }
+#+HTML_HEAD: })();
+#+HTML_HEAD: </script>

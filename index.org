@@ -1,7 +1,8 @@
 #+title: Bo-Yuan Ning's Site
 #+author: Bo-Yuan Ning (宁博元)
 # #+options: num:nil
-#+setupfile: ./source/org/theme-readtheorg.setup
+#+setupfile: ./source/org/setup/html-theme-readtheorg.setup
+# #+SETUPFILE: html-theme-readtheorg.setup
 # #+REVEAL_MATHJAX_URL: /home/nby/software/MathJax-master/es5/tex-chtml-full.js
 #+HTML_HEAD: <style> #content{max-width:1300px;}</style>
 * Who am I and what I do?
